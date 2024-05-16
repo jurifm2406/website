@@ -1,0 +1,32 @@
+{
+	"/(private)": [
+		"src/routes/(private)/+layout.server.ts",
+		"src/routes/(private)/+layout.server.ts"
+	],
+	"/": [],
+	"/(admin)/admin": [
+		"src/routes/(admin)/admin/+layout.server.ts",
+		"src/routes/(admin)/admin/+layout.server.ts"
+	],
+	"/(admin)/admin/graph": [
+		"src/routes/(admin)/admin/graph/+page.server.ts",
+		"src/routes/(admin)/admin/+layout.server.ts"
+	],
+	"/(private)/graph": [
+		"src/routes/(private)/graph/+page.server.ts",
+		"src/routes/(private)/+layout.server.ts"
+	],
+	"/(login)/login": [
+		"src/routes/(login)/login/+page.server.ts"
+	],
+	"/(login)/login/admin": [
+		"src/routes/(login)/login/admin/+page.server.ts"
+	],
+	"/(private)/logout": [
+		"src/routes/(private)/logout/+page.server.ts",
+		"src/routes/(private)/+layout.server.ts"
+	],
+	"/(private)/rummy": [
+		"src/routes/(private)/+layout.server.ts"
+	]
+}
