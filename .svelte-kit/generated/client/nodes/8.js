@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/(private)/+page.svelte";
+export { default as component } from "../../../../src/routes/(protected)/rummy/+page.svelte";

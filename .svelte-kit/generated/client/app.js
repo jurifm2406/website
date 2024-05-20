@@ -15,17 +15,17 @@ export const nodes = [
 	() => import('./nodes/11')
 ];
 
-export const server_loads = [3,2];
+export const server_loads = [];
 
 export const dictionary = {
-		"/(private)": [8,[3]],
-		"/(admin)/admin": [4,[2]],
-		"/(admin)/admin/graph": [~5,[2]],
-		"/(private)/graph": [~9,[3]],
-		"/(login)/login": [~6],
-		"/(login)/login/admin": [~7],
-		"/(private)/logout": [~10,[3]],
-		"/(private)/rummy": [11,[3]]
+		"/": [4],
+		"/(admin)/admin": [5,[2]],
+		"/(admin)/admin/graph": [~6,[2]],
+		"/(protected)/graph": [~7,[3]],
+		"/login": [~9],
+		"/login/admin": [~10],
+		"/logout": [~11],
+		"/(protected)/rummy": [8,[3]]
 	};
 
 export const hooks = {
