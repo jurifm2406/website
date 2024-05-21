@@ -1,13 +1,6 @@
-import { pb } from "$lib/server/auth";
 import { redirect } from "@sveltejs/kit";
 import type { Actions } from "@sveltejs/kit";
 import { ClientResponseError } from "pocketbase";
-
-export async function load() {
-    if (pb.authStore.isAdmin) {
-        redirect(308, "/admin");
-    }
-}
 
 export const actions: Actions = {
     default: async (event) => {
@@ -18,7 +11,7 @@ export const actions: Actions = {
 
         if (typeof username === "string" && typeof password === "string") {
             try {
-                await pb.admins.authWithPassword(username, password);
+                await event.locals.pb.admins.authWithPassword(username, password);
             } catch (error) {
                 if (error instanceof ClientResponseError) {
                     console.error(error.message);

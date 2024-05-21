@@ -1,8 +1,9 @@
+// @ts-nocheck
 import type { Person, RawRelation, Relation } from "$lib/types";
 import { fail, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
 
-export const load: PageServerLoad = async (event) => {
+export const load = async (event: Parameters<PageServerLoad>[0]) => {
     const p = await event.locals.pb
         .collection("persons")
         .getFullList<Person>();

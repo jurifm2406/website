@@ -1,7 +1,8 @@
+// @ts-nocheck
 import type { Person, RawRelation, Relation } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async (event) => {
+export const load = async (event: Parameters<PageServerLoad>[0]) => {
     const persons = await event.locals.pb.collection("persons").getFullList<Person>();
     const relations = await event.locals.pb.collection("relations").getFullList<RawRelation>({
         expand: "person1, person2",

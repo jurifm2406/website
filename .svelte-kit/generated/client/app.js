@@ -11,20 +11,18 @@ export const nodes = [
 	() => import('./nodes/7'),
 	() => import('./nodes/8'),
 	() => import('./nodes/9'),
-	() => import('./nodes/10'),
-	() => import('./nodes/11')
+	() => import('./nodes/10')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [4],
-		"/(admin)/admin": [5,[2]],
-		"/(admin)/admin/graph": [~6,[2]],
+		"/(protected)": [6,[3]],
+		"/(admin)/admin": [4,[2]],
+		"/(admin)/admin/graph": [~5,[2]],
 		"/(protected)/graph": [~7,[3]],
 		"/login": [~9],
 		"/login/admin": [~10],
-		"/logout": [~11],
 		"/(protected)/rummy": [8,[3]]
 	};
 

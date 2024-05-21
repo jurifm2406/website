@@ -1,4 +1,3 @@
-import { pb } from "$lib/server/auth";
 import { redirect } from "@sveltejs/kit";
 import type { Actions } from "@sveltejs/kit";
 import { ClientResponseError } from "pocketbase";
@@ -12,7 +11,7 @@ export const actions: Actions = {
 
         if (typeof username === "string" && typeof password === "string") {
             try {
-                await pb.collection("users").authWithPassword(username, password);
+                await event.locals.pb.collection("users").authWithPassword(username, password);
             } catch (error) {
                 if (error instanceof ClientResponseError) {
                     console.error(error.message);

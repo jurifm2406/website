@@ -15,7 +15,7 @@
 		"src/routes/login/admin/+page.server.ts"
 	],
 	"/logout": [
-		"src/routes/logout/+page.server.ts"
+		"src/routes/logout/+server.ts"
 	],
 	"/(protected)/rummy": []
 }
