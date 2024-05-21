@@ -5,7 +5,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     event.locals.pb = new PocketBase('http://127.0.0.1:8090');
 
     // load the store data from the request cookie string
-    event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
+    event.locals.pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '')
 
     try {
         // get an up-to-date auth store state by verifying and refreshing the loaded auth model (if any)
@@ -17,21 +17,22 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if (!event.url.pathname.startsWith("/login")) {
         if (!event.locals.pb.authStore.isAuthRecord) {
+            console.log("not logged in!")
             redirect(308, "/login")
         }
-    } 
-    
-    /*else if (event.url.pathname.startsWith("/login")) {
+        if (event.url.pathname.startsWith("/admin")) {
+            if (!event.locals.pb.authStore.isAdmin) {
+                console.log("not an admin!")
+                redirect(308, "/login/admin")
+            }
+        }
+    }
+
+    else if (event.url.pathname.startsWith("/login")) {
         if (event.locals.pb.authStore.isAdmin) {
             redirect(308, "/admin")
-        } else {
+        } else if (event.locals.pb.authStore.isAuthRecord) {
             redirect(308, "/")
-        }
-    }*/
-
-    if (event.url.pathname.startsWith("/(admin)/admin")) {
-        if (!event.locals.pb.authStore.isAdmin) {
-            redirect(308, "/login/admin")
         }
     }
 

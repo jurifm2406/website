@@ -13,9 +13,7 @@ export const actions: Actions = {
             try {
                 await event.locals.pb.admins.authWithPassword(username, password);
             } catch (error) {
-                if (error instanceof ClientResponseError) {
-                    console.error(error.message);
-                }
+                console.error(error)
                 success = false;
             }
         } else {

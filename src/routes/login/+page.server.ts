@@ -24,6 +24,8 @@ export const actions: Actions = {
         }
 
         if (success) {
+            event.cookies.set("pb_auth", event.locals.pb.authStore.exportToCookie(), {})
+            event.locals.pb.authStore.isAdmin ? redirect(308, "/admin") :
             redirect(308, "/");
         }
     },
