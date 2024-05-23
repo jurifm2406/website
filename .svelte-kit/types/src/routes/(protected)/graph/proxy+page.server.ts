@@ -1,5 +1,4 @@
 // @ts-nocheck
-import type { Person, RawRelation, Relation } from "$lib/types";
 import type { PageServerLoad } from "./$types";
 
 export const load = async (event: Parameters<PageServerLoad>[0]) => {

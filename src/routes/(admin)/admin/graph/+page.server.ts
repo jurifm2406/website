@@ -1,34 +1,16 @@
-import type { Person, RawRelation, Relation } from "$lib/types";
 import { fail, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types.js";
+import prisma from "$lib/server/prisma";
 
-export const load: PageServerLoad = async (event) => {
-    const p = await event.locals.pb
-        .collection("persons")
-        .getFullList<Person>();
+export const load: PageServerLoad = async () => {
+    const persons = await prisma.person.findMany();
 
-    const r = await event.locals.pb
-        .collection("relations")
-        .getFullList<RawRelation>({
-            expand: "person1,person2"
-        });
-
-    const persons: Person[] = p.map(person => ({
-        id: person.id,
-        name: person.name
-    }));
-
-    const relations: Relation[] = r.map(relation => ({
-        id: relation.id,
-        person1: {
-            id: relation.expand.person1.id,
-            name: relation.expand.person1.name
-        },
-        person2: {
-            id: relation.expand.person2.id,
-            name: relation.expand.person2.name
+    const relations = await prisma.relation.findMany({
+        include: {
+            person1: true,
+            person2: true
         }
-    }));
+    })
 
     return {
         persons: persons,

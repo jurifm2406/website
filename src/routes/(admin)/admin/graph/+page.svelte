@@ -1,12 +1,11 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { page } from "$app/stores";
-    import type { Person, Relation } from "$lib/types";
 
-    export let data: { persons: Person[]; relations: Relation[] };
+    export let data;
 
     let selectedPerson1 = "";
-    let person2Options: Person[] = [];
+    let person2Options = [];
 
     $: if (selectedPerson1) {
         person2Options = data.persons.filter(person2 => {

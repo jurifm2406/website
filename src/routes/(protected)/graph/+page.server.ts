@@ -1,24 +1,25 @@
-import type { Person, RawRelation, Relation } from "$lib/types";
 import type { PageServerLoad } from "./$types";
+import prisma from "$lib/server/prisma";
 
-export const load: PageServerLoad = async (event) => {
-    const persons = await event.locals.pb.collection("persons").getFullList<Person>();
-    const relations = await event.locals.pb.collection("relations").getFullList<RawRelation>({
-        expand: "person1, person2",
-    });
-
-    const nodes = persons.map((person) => {
+export const load: PageServerLoad = async () => {
+    const persons = await prisma.person.findMany()
+    const relations = await prisma.relation.findMany({
+        include: {
+            person1: true,
+            person2: true
+        }
+    })
+    const nodes = persons.map(person => {
         return {
             id: person.name,
             group: 1
         }
     })
 
-    const links = relations.map((relation) => {
-
+    const links = relations.map(relation => {
         return {
-            source: relation.expand.person1.name,
-            target: relation.expand.person2.name,
+            source: relation.person1.name,
+            target: relation.person2.name,
             value: 1
         }
     })
