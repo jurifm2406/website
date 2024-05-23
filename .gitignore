@@ -128,5 +128,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# pocketbase
-data
+# prisma
+/prisma/*.db
