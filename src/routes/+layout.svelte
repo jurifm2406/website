@@ -16,23 +16,23 @@
     import type { LayoutData } from "./$types";
 
     async function logout() {
-    const response = await fetch("/logout", {
-        method: "POST",
-        body: "",
-        headers: {
-            "content-type": "application/json",
-        },
-    });
-
-    if (response.ok) {
-        goto("/", {
-            replaceState: true,
-            invalidateAll: true,
+        const response = await fetch("/logout", {
+            method: "POST",
+            body: "",
+            headers: {
+                "content-type": "application/json",
+            },
         });
-    }
-}
 
-export let data: LayoutData;
+        if (response.ok) {
+            goto("/", {
+                replaceState: true,
+                invalidateAll: true,
+            });
+        }
+    }
+
+    export let data: LayoutData;
 </script>
 
 <div class="relative px-8 mb-14">
@@ -43,7 +43,7 @@ export let data: LayoutData;
         <NavHamburger />
         <NavUl ulClass="flex flex-col items-center p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium">
             <NavLi active={true} href="/">home</NavLi>
-            { #if data.user}
+            { #if data?.user !== null }
                 <NavLi href="/graph">graph</NavLi>
                 <NavLi>
                     <div class="flex items-center md:order-2">

@@ -1,8 +1,9 @@
 <script lang="ts">
     import { create, drag, forceCenter, forceLink, forceManyBody, forceSimulation, select, zoom } from "d3";
     import { onMount } from "svelte";
+    import type { PageData } from "./$types"
 
-    export let data;
+    export let data: PageData;
 
 onMount(async () => {
     // Specify the dimensions of the chart.
