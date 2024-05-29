@@ -43,8 +43,11 @@ export let data: LayoutData;
         <NavHamburger />
         <NavUl ulClass="flex flex-col items-center p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium">
             <NavLi active={true} href="/">home</NavLi>
-            { #if data?.user !== null }
+            { #if data.user !== null }
                 <NavLi href="/graph">graph</NavLi>
+                { #if data.user.admin }
+                    <NavLi href="/admin/graph">admin graph</NavLi>
+                { /if }
                 <NavLi>
                     <div class="flex items-center md:order-2">
                         <Avatar id="avatar-menu" src="" />

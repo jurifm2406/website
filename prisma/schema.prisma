@@ -16,6 +16,7 @@ model User {
   username      String    @unique
   name          String?
   password_hash String
+  admin         Boolean   @default(false)
 }
 
 model Session {

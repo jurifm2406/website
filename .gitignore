@@ -130,3 +130,4 @@ dist
 
 # prisma
 /prisma/*.db
+/prisma/*.db-journal
