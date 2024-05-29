@@ -1,7 +1,7 @@
-import { Lucia } from "lucia";
+import { dev } from "$app/environment";
 import { prisma } from "$lib/server/prisma";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import { dev } from "$app/environment";
+import { Lucia } from "lucia";
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user);
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { create, drag, forceCenter, forceLink, forceManyBody, forceSimulation, select, zoom } from "d3";
+    import { onMount } from "svelte";
 
     export let data;
 

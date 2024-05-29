@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { Register, Section } from "flowbite-svelte-blocks";
-    import { Button, Helper, Input, Label } from "flowbite-svelte";
     import { enhance } from "$app/forms";
+    import { Button, Helper, Input, Label } from "flowbite-svelte";
+    import { Register, Section } from "flowbite-svelte-blocks";
 
     export let form;
 </script>

@@ -1,8 +1,8 @@
 import { lucia } from "$lib/server/auth";
-import { fail, redirect } from "@sveltejs/kit";
-import { generateIdFromEntropySize } from "lucia";
-import { hash } from "bcrypt";
 import { prisma } from "$lib/server/prisma";
+import { fail, redirect } from "@sveltejs/kit";
+import { hash } from "bcrypt";
+import { generateIdFromEntropySize } from "lucia";
 
 import type { Actions } from "./$types";
 
