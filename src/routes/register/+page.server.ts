@@ -1,15 +1,16 @@
-// routes/login/+page.server.ts
 import { lucia } from "$lib/server/auth";
 import { fail, redirect } from "@sveltejs/kit";
-import { compare } from "bcrypt";
+import { generateIdFromEntropySize } from "lucia";
+import { hash } from "bcrypt";
+import { prisma } from "$lib/server/prisma";
 
 import type { Actions } from "./$types";
-import { prisma } from "$lib/server/prisma";
 
 export const actions: Actions = {
     default: async (event) => {
         const formData = await event.request.formData();
         const username = formData.get("username");
+        const name = formData.get("name");
         const password = formData.get("password");
 
         if (
@@ -22,33 +23,42 @@ export const actions: Actions = {
                 message: "Invalid username"
             });
         }
+        if (typeof name !== "string" && name !== null) {
+            return fail(400, {
+                message: "An error occured"
+            });
+        }
         if (typeof password !== "string" || password.length < 6 || password.length > 255) {
             return fail(400, {
                 message: "Invalid password"
             });
         }
 
-        const existingUser = await prisma.user.findUnique({
+        const userId = generateIdFromEntropySize(10); // 16 characters long
+        const passwordHash = await hash(password, 10);
+
+        const exists = await prisma.user.findUnique({
             where: {
                 username
             }
         })
 
-        if (!existingUser) {
-            return fail(400, {
-                message: "Incorrect username or password"
-            });
+        if (exists) {
+            return fail (400, {
+                message: "user already exists"
+            })
         }
 
-        const validPassword = await compare(password, existingUser.password_hash);
+        await prisma.user.create({
+            data: {
+                id: userId,
+                name: name,
+                username: username,
+                password_hash: passwordHash
+            }
+        });
 
-        if (!validPassword) {
-            return fail(400, {
-                message: "Incorrect username or password"
-            });
-        }
-
-        const session = await lucia.createSession(existingUser.id, {});
+        const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
             path: ".",
