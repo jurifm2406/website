@@ -1,7 +1,7 @@
 import { lucia } from "$lib/server/auth";
 import type { Handle } from "@sveltejs/kit";
 import { redirect } from "@sveltejs/kit";
-import { sequence } from "@sveltejs/kit/hooks"
+import { sequence } from "@sveltejs/kit/hooks";
 
 const authentication: Handle = async ({ event, resolve }) => {
     const sessionId = event.cookies.get(lucia.sessionCookieName);
@@ -16,7 +16,7 @@ const authentication: Handle = async ({ event, resolve }) => {
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
             path: ".",
-            ...sessionCookie.attributes
+            ...sessionCookie.attributes,
         });
     }
 
@@ -24,7 +24,7 @@ const authentication: Handle = async ({ event, resolve }) => {
         const sessionCookie = lucia.createBlankSessionCookie();
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
             path: ".",
-            ...sessionCookie.attributes
+            ...sessionCookie.attributes,
         });
     }
     event.locals.user = user;
@@ -33,17 +33,20 @@ const authentication: Handle = async ({ event, resolve }) => {
 };
 
 const authorization: Handle = async ({ event, resolve }) => {
-    if (event.url.pathname.startsWith("login") || event.url.pathname.startsWith("register")) {
+    if (
+        event.url.pathname.startsWith("login") ||
+        event.url.pathname.startsWith("register")
+    ) {
         if (event.locals.user) {
             redirect(303, "/");
         }
     } else if (!(event.url.pathname === "/")) {
         if (!event.locals.user) {
-            redirect(303, "/")
+            redirect(303, "/");
         }
     }
 
-    return resolve(event)
-}
+    return resolve(event);
+};
 
 export const handle: Handle = sequence(authentication, authorization);

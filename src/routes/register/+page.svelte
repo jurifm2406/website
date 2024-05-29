@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Section, Register } from "flowbite-svelte-blocks";
-    import { Button, Label, Helper, Input } from "flowbite-svelte";
+    import { Register, Section } from "flowbite-svelte-blocks";
+    import { Button, Helper, Input, Label } from "flowbite-svelte";
     import { enhance } from "$app/forms";
 
     export let form;
@@ -13,7 +13,7 @@
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Create an account</h3>
                 <Label class="space-y-2">
                     <span>username</span>
-                    <Input type="text" name="username" required />
+                    <Input name="username" required type="text" />
                 </Label>
                 { #if form?.usernameMissing }
                     <Helper color="red">
@@ -22,11 +22,11 @@
                 { /if }
                 <Label class="space-y-2">
                     <span>name</span>
-                    <Input type="text" name="name" required />
+                    <Input name="name" required type="text" />
                 </Label>
                 <Label class="space-y-2">
                     <span>password</span>
-                    <Input type="password" name="password" required />
+                    <Input name="password" required type="password" />
                 </Label>
                 { #if form?.passwordMissing }
                     <Helper color="red">
@@ -35,14 +35,14 @@
                 { /if }
                 <Label class="space-y-2">
                     <span>confirm password</span>
-                    <Input type="password" name="password" required />
+                    <Input name="password" required type="password" />
                 </Label>
                 { #if form?.passwordMismatch }
                     <Helper color="red">
                         passwords do not match
                     </Helper>
                 { /if }
-                <Button type="submit" class="w-full1">Create an account</Button>
+                <Button class="w-full1" type="submit">Create an account</Button>
                 { #if form?.userExists }
                     <Helper color="red">
                         user already exists
@@ -54,7 +54,7 @@
                     </Helper>
                 { /if }
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Already have an account? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                    Already have an account? <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="/login">Login here</a>
                 </div>
             </form>
         </div>

@@ -1,5 +1,9 @@
 const config = {
-    content: ["./src/**/*.{html,js,svelte,ts}", "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}", "./node_modules/flowbite-svelte-blocks/**/*.{html,js,svelte,ts}"],
+    content: [
+        "./src/**/*.{html,js,svelte,ts}",
+        "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
+        "./node_modules/flowbite-svelte-blocks/**/*.{html,js,svelte,ts}",
+    ],
 
     plugins: [require("flowbite/plugin"), require("flowbite-typography")],
 
@@ -32,11 +36,11 @@ const config = {
                     "600": "#0284c7",
                     "700": "#0369a1",
                     "800": "#075985",
-                    "900": "#0c4a6e"
-                }
-            }
-        }
-    }
+                    "900": "#0c4a6e",
+                },
+            },
+        },
+    },
 };
 
 module.exports = config;

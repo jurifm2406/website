@@ -6,9 +6,9 @@
 <div class="relative flex justify-center">
     <AppShell>
         <svelte:fragment slot="header">
-            <a href="/admin" class="btn variant-glass">Home</a>
-            <a href="/admin/graph" class="btn variant-glass">Graph</a>
-            <a href="/logout" class="btn variant-glass">Logout</a>
+            <a class="btn variant-glass" href="/admin">Home</a>
+            <a class="btn variant-glass" href="/admin/graph">Graph</a>
+            <a class="btn variant-glass" href="/logout">Logout</a>
         </svelte:fragment>
         <slot/>
     </AppShell>

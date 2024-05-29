@@ -20,17 +20,21 @@ export const actions: Actions = {
             !/^[a-z0-9_-]+$/.test(username)
         ) {
             return fail(400, {
-                message: "Invalid username"
+                message: "Invalid username",
             });
         }
         if (typeof name !== "string" && name !== null) {
             return fail(400, {
-                message: "An error occured"
+                message: "An error occured",
             });
         }
-        if (typeof password !== "string" || password.length < 6 || password.length > 255) {
+        if (
+            typeof password !== "string" ||
+            password.length < 6 ||
+            password.length > 255
+        ) {
             return fail(400, {
-                message: "Invalid password"
+                message: "Invalid password",
             });
         }
 
@@ -39,14 +43,14 @@ export const actions: Actions = {
 
         const exists = await prisma.user.findUnique({
             where: {
-                username
-            }
-        })
+                username,
+            },
+        });
 
         if (exists) {
-            return fail (400, {
-                message: "user already exists"
-            })
+            return fail(400, {
+                message: "user already exists",
+            });
         }
 
         await prisma.user.create({
@@ -54,17 +58,17 @@ export const actions: Actions = {
                 id: userId,
                 name: name,
                 username: username,
-                password_hash: passwordHash
-            }
+                password_hash: passwordHash,
+            },
         });
 
         const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
             path: ".",
-            ...sessionCookie.attributes
+            ...sessionCookie.attributes,
         });
 
         redirect(302, "/");
-    }
+    },
 };

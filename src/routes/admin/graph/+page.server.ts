@@ -1,4 +1,4 @@
-import { fail, type Actions } from "@sveltejs/kit";
+import { type Actions, fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "../../../../.svelte-kit/types/src/routes";
 
 import prisma from "../../../auth";
@@ -9,15 +9,15 @@ export const load: PageServerLoad = async () => {
     const relations = await prisma.relation.findMany({
         include: {
             person1: true,
-            person2: true
-        }
-    })
+            person2: true,
+        },
+    });
 
     return {
         persons: persons,
-        relations: relations
+        relations: relations,
     };
-}
+};
 
 export const actions = {
     addRelation: async (event) => {
@@ -37,9 +37,10 @@ export const actions = {
 
         let success = false;
 
-        event.locals.pb.collection("relations")
+        event.locals.pb
+            .collection("relations")
             .getFirstListItem(
-                `(person1="${person1}" && person2="${person2}") || (person1="${person2}" && person2="${person1})"`
+                `(person1="${person1}" && person2="${person2}") || (person1="${person2}" && person2="${person1})"`,
             )
             .catch(() => {
                 success = true;
@@ -48,7 +49,7 @@ export const actions = {
                 if (success) {
                     const relation = {
                         person1: person1,
-                        person2: person2
+                        person2: person2,
                     };
 
                     event.locals.pb.collection("relations").create(relation);
@@ -82,14 +83,17 @@ export const actions = {
         }
 
         let success = false;
-        event.locals.pb.collection("persons")
+        event.locals.pb
+            .collection("persons")
             .getFirstListItem(`name="${name}"`)
             .catch(() => {
                 success = true;
             })
             .then(() => {
                 if (success) {
-                    event.locals.pb.collection("persons").create({ name: name });
+                    event.locals.pb
+                        .collection("persons")
+                        .create({ name: name });
                 } else {
                     return fail(422, { addPersonDuplicate: true });
                 }
@@ -121,9 +125,9 @@ export const actions = {
         }
 
         const d = {
-            name: name
-        }
+            name: name,
+        };
 
         await event.locals.pb.collection("persons").update(person, d);
-    }
+    },
 } satisfies Actions;

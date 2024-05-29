@@ -4,23 +4,27 @@
 
     export let data;
 
-    let selectedPerson1 = "";
-    let person2Options = [];
+let selectedPerson1 = "";
+let person2Options = [];
 
-    $: if (selectedPerson1) {
-        person2Options = data.persons.filter(person2 => {
-                for (let relation of data.relations) {
-                    if (relation.person1.id === selectedPerson1 && relation.person2.id === person2.id || relation.person1.id === person2.id && relation.person2.id === selectedPerson1) {
-                        return false;
-                    }
-                    if (person2.id === selectedPerson1) {
-                        return false;
-                    }
-                }
-                return true;
+$: if (selectedPerson1) {
+    person2Options = data.persons.filter((person2) => {
+        for (let relation of data.relations) {
+            if (
+                (relation.person1.id === selectedPerson1 &&
+                    relation.person2.id === person2.id) ||
+                (relation.person1.id === person2.id &&
+                    relation.person2.id === selectedPerson1)
+            ) {
+                return false;
             }
-        );
-    }
+            if (person2.id === selectedPerson1) {
+                return false;
+            }
+        }
+        return true;
+    });
+}
 </script>
 
 <div class="grid grid-cols-2 grid-rows-3 gap-5 mx-auto" style="width: 70%;">
@@ -30,12 +34,12 @@
     >
         <form
             action="?/removePerson"
+            class="grid"
             method="post"
             use:enhance
-            class="grid"
         >
             <select class="select" name="person">
-                <option value="" selected disabled>Select Person</option>
+                <option disabled selected value="">Select Person</option>
                 { #each data.persons as person }
                     <option value="{person.id}">{person.name}</option>
                 { /each    }
@@ -53,9 +57,9 @@
     >
         <form
             action="?/addPerson"
+            class="grid"
             method="post"
             use:enhance
-            class="grid"
         >
             <input class="input" name="person" type="text" /><br />
             <button class="btn variant-filled" type="submit">add person</button>
@@ -73,19 +77,19 @@
     >
         <form
             action="?/addRelation"
+            class="grid"
             method="post"
             use:enhance
-            class="grid"
         >
-            <select class="select" name="person1" bind:value={selectedPerson1}>
-                <option value="" disabled selected>Select Person</option>
+            <select bind:value={selectedPerson1} class="select" name="person1">
+                <option disabled selected value="">Select Person</option>
                 { #each data.persons as person }
                     <option value="{person.id}">{person.name}</option>
                 { /each    }
             </select>
 
             <select class="select" name="person2">
-                <option value="" disabled selected>Select Person</option>
+                <option disabled selected value="">Select Person</option>
                 { #if selectedPerson1 }
                     { #each person2Options as person }
                         <option value="{person.id}">{person.name}</option>
@@ -102,12 +106,12 @@
     >
         <form
             action="?/editPerson"
+            class="grid"
             method="post"
             use:enhance
-            class="grid"
         >
             <select class="select" name="person">
-                <option value="" selected disabled>Select Person</option>
+                <option disabled selected value="">Select Person</option>
                 { #each data.persons as person }
                     <option value="{person.id}">{person.name}</option>
                 { /each  }
@@ -125,12 +129,12 @@
     >
         <form
             action="?/removeRelation"
+            class="grid"
             method="post"
             use:enhance
-            class="grid"
         >
             <select class="select" name="relation">
-                <option value="" disabled selected>Select Relation</option>
+                <option disabled selected value="">Select Relation</option>
                 { #each data.relations as relation }
                     <option value="{relation.id}">{relation.person1.name} &harr; {relation.person2.name}</option>
                 { /each    }

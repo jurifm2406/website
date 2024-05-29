@@ -1,5 +1,5 @@
-<script lang="ts">import { Section, Register } from "flowbite-svelte-blocks";
-import { Button, Label, Input } from "flowbite-svelte";
+<script lang="ts">import { Register, Section } from "flowbite-svelte-blocks";
+import { Button, Input, Label } from "flowbite-svelte";
 import { enhance } from "$app/forms";
 </script>
 
@@ -10,15 +10,15 @@ import { enhance } from "$app/forms";
                 <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Login</h3>
                 <Label class="space-y-2">
                     <span>username</span>
-                    <Input type="text" name="username" required />
+                    <Input name="username" required type="text" />
                 </Label>
                 <Label class="space-y-2">
                     <span>password</span>
-                    <Input type="password" name="password" required />
+                    <Input name="password" required type="password" />
                 </Label>
-                <Button type="submit" class="w-full1">Sign in</Button>
+                <Button class="w-full1" type="submit">Sign in</Button>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Don’t have an account yet? <a href="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                    Don’t have an account yet? <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="/register">Sign up</a>
                 </p>
             </form>
         </div>
