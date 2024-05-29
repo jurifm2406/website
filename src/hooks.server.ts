@@ -36,21 +36,19 @@ const authentication: Handle = async ({ event, resolve }) => {
 const authorization: Handle = async ({ event, resolve }) => {
     if (
         (event.url.pathname.startsWith("/login") ||
-        event.url.pathname.startsWith("/register")) &&
-        event.locals.user !== null
+            event.url.pathname.startsWith("/register")) &&
+        event.locals.user
     ) {
-        console.log("user already logged in");
         return redirect(303, "/");
     }
 
     if (
         event.url.pathname !== "/" &&
-        event.url.pathname.startsWith("/login") &&
-        event.url.pathname.startsWith("/register") &&
+        !event.url.pathname.startsWith("/login") &&
+        !event.url.pathname.startsWith("/register") &&
         !event.locals.user
     ) {
-        console.log("user not authorized")
-        return redirect(303, "/")
+        return redirect(303, "/");
     }
 
     return resolve(event);

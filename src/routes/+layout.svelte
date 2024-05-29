@@ -16,23 +16,23 @@
     import type { LayoutData } from "./$types";
 
     async function logout() {
-        const response = await fetch("/logout", {
-            method: "POST",
-            body: "",
-            headers: {
-                "content-type": "application/json",
-            },
+    const response = await fetch("/logout", {
+        method: "POST",
+        body: "",
+        headers: {
+            "content-type": "application/json",
+        },
+    });
+
+    if (response.ok) {
+        goto("/", {
+            replaceState: true,
+            invalidateAll: true,
         });
-
-        if (response.ok) {
-            goto("/", {
-                replaceState: true,
-                invalidateAll: true,
-            });
-        }
     }
+}
 
-    export let data: LayoutData;
+export let data: LayoutData;
 </script>
 
 <div class="relative px-8 mb-14">
