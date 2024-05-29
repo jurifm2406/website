@@ -12,7 +12,7 @@ const authentication: Handle = async ({ event, resolve }) => {
     }
 
     const { session, user } = await lucia.validateSession(sessionId);
-    if (session && session.fresh) {
+    if (session?.fresh) {
         const sessionCookie = lucia.createSessionCookie(session.id);
         event.cookies.set(sessionCookie.name, sessionCookie.value, {
             path: ".",
@@ -34,14 +34,14 @@ const authentication: Handle = async ({ event, resolve }) => {
 
 const authorization: Handle = async ({ event, resolve }) => {
     if (
-        event.url.pathname.startsWith("login") ||
-        event.url.pathname.startsWith("register")
+        event.url.pathname.startsWith("/login") ||
+        event.url.pathname.startsWith("/register")
     ) {
-        if (event.locals.user) {
+        if (event.locals.user !== null) {
             redirect(303, "/");
         }
-    } else if (!(event.url.pathname === "/")) {
-        if (!event.locals.user) {
+    } else if (event.url.pathname !== "/") {
+        if (event.locals.user === null) {
             redirect(303, "/");
         }
     }

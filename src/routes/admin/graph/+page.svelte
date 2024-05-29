@@ -4,12 +4,12 @@
 
     export let data;
 
-let selectedPerson1 = "";
+const selectedPerson1 = "";
 let person2Options = [];
 
 $: if (selectedPerson1) {
     person2Options = data.persons.filter((person2) => {
-        for (let relation of data.relations) {
+        for (const relation of data.relations) {
             if (
                 (relation.person1.id === selectedPerson1 &&
                     relation.person2.id === person2.id) ||
