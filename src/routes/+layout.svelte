@@ -35,8 +35,8 @@ async function logout() {
 export let data: LayoutData;
 </script>
 
-<div class="relative px-8 mb-14">
-    <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b">
+<div class="relative px-8">
+    <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b bg-white dark:bg-black">
         <NavBrand href="/">
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">franz münzner</span>
         </NavBrand>
@@ -79,6 +79,8 @@ export let data: LayoutData;
             </NavLi>
         </NavUl>
     </Navbar>
+    <div class="overflow-scroll pt-16 h-max">
+        <slot />
+    </div>
 </div>
 
-<slot />
