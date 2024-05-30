@@ -12,6 +12,7 @@ export const actions: Actions = {
         const username = formData.get("username");
         const name = formData.get("name");
         const password = formData.get("password");
+        const password_confirm = formData.get("password_confirm");
 
         if (
             typeof username !== "string" ||
@@ -19,13 +20,13 @@ export const actions: Actions = {
             username.length > 31 ||
             !/^[a-z0-9_-]+$/.test(username)
         ) {
-            return fail(400, {
-                message: "Invalid username",
+            return fail(422, {
+                usernameInvalid: true,
             });
         }
         if (typeof name !== "string" && name !== null) {
-            return fail(400, {
-                message: "An error occured",
+            return fail(422, {
+                unknownError: true,
             });
         }
         if (
@@ -33,8 +34,14 @@ export const actions: Actions = {
             password.length < 6 ||
             password.length > 255
         ) {
-            return fail(400, {
-                message: "Invalid password",
+            return fail(422, {
+                passwordInvalid: true,
+            });
+        }
+
+        if (!password_confirm || password_confirm !== password) {
+            return fail(422, {
+                passwordMismatch: true,
             });
         }
 
@@ -48,8 +55,8 @@ export const actions: Actions = {
         });
 
         if (exists) {
-            return fail(400, {
-                message: "user already exists",
+            return fail(422, {
+                userDuplicate: true,
             });
         }
 
