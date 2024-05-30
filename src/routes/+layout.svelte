@@ -36,28 +36,28 @@ export let data: LayoutData;
 </script>
 
 <div class="relative px-8">
-    <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b bg-white dark:bg-black">
+    <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b shadow bg-white dark:bg-black">
         <NavBrand href="/">
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">franz münzner</span>
         </NavBrand>
         <NavHamburger />
         <NavUl ulClass="flex flex-col items-center p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium">
-            <NavLi active={true} href="/">home</NavLi>
+            <NavLi class="text-black dark:text-white" active={true} href="/">home</NavLi>
             { #if data.user !== null }
-                <NavLi href="/graph">graph</NavLi>
+                <NavLi class="text-black dark:text-white" href="/graph">graph</NavLi>
                 { #if data.user.admin }
-                    <NavLi href="/admin/graph">admin graph</NavLi>
+                    <NavLi class="text-black dark:text-white" href="/admin/graph">admin graph</NavLi>
                 { /if }
-                <NavLi>
+                <NavLi class="text-black dark:text-white">
                     <div class="flex items-center md:order-2">
                         <Avatar id="avatar-menu" src="" />
                         <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
                     </div>
                     <Dropdown placement="bottom" triggeredBy="#avatar-menu">
                         <DropdownHeader>
-                            <span class="block text-sm">{ data.user.username }</span>
+                            <span class="block text-sm font-bold text-black dark:text-white">{ data.user.username }</span>
                         </DropdownHeader>
-                        <DropdownItem on:click={logout}>log out</DropdownItem>
+                        <DropdownItem class="text-black dark:text-white" on:click={logout}>log out</DropdownItem>
                     </Dropdown>
                 </NavLi>
             { :else }
@@ -66,11 +66,11 @@ export let data: LayoutData;
                         <Avatar id="avatar-menu" src="" />
                         <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
                     </div>
-                    <Dropdown placement="bottom" triggeredBy="#avatar-menu">
+                    <Dropdown class="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-black" placement="bottom" triggeredBy="#avatar-menu">
                         <DropdownHeader>
-                            <span class="block text-sm">not logged in</span>
+                            <span class="block text-sm font-bold text-black dark:text-white">not logged in</span>
                         </DropdownHeader>
-                        <DropdownItem href="/login">log in</DropdownItem>
+                        <DropdownItem class="text-black dark:text-white" href="/login">log in</DropdownItem>
                     </Dropdown>
                 </NavLi>
             { /if }
@@ -79,7 +79,7 @@ export let data: LayoutData;
             </NavLi>
         </NavUl>
     </Navbar>
-    <div class="overflow-scroll pt-16 h-max">
+    <div class="overflow-scroll pt-24 h-max">
         <slot />
     </div>
 </div>

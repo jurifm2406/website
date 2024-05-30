@@ -64,40 +64,42 @@ $: if (addRelationPerson1Selected) {
 
 <div class="grid grid-cols-2 grid-rows-3 gap-5 mx-auto" style="width: 70%;">
     <div
-        class="flex justify-center items-center text-center rounded border-2 border-black p-5 bg-gray-500"
+        class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
         style="grid-area: 1 / 1 / 2 / 2;"
     >
         <form
             action="?/removePerson"
-            class="grid"
+            class="flex flex-col space-y-4"
             method="post"
             use:enhance
         >
-            <Label>
+            <Label class="text-black dark:text-white">
                 select a person
-                <Select bind:value={removePersonSelected} class="select" items={personOptions} name="person" />
+                <Select class="dark:bg-gray-900" bind:value={removePersonSelected} items={personOptions} name="person" />
             </Label>
             { #if form?.removePersonIncomplete }
                 <Helper color="red">Specify a person!</Helper>
             { /if }
             
-            <Button class="btn variant-filled" type="submit">remove person</Button>
+            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">remove person</Button>
         </form>
     </div>
     <div
-        class="flex justify-center items-center text-center rounded border-2 border-black p-5 bg-gray-500"
+        class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
         style="grid-area: 1 / 2 / 2 / 3;"
     >
         <form
             action="?/addPerson"
-            class="grid"
+            class="flex flex-col space-y-4"
             method="post"
             use:enhance
         >
-            <Label for="person">type name</Label>
-            <Input class="input" name="person" id="person" type="text" /><br />
+            <Label class="text-black dark:text-white">
+                type name
+                <Input class="dark:bg-gray-900" name="person" id="person" type="text" />
+            </Label>
 
-            <Button class="btn variant-filled" type="submit">add person</Button>
+            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">add person</Button>
             {#if form?.addPersonIncomplete}
                 <Helper color="red">Specify a person!</Helper>
             {/if}
@@ -107,50 +109,52 @@ $: if (addRelationPerson1Selected) {
         </form>
     </div>
     <div
-        class="flex justify-center text-center rounded border-2 bg-gray-500 border-black p-5"
+        class="flex justify-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
         style="grid-area: 2 / 1 / 3 / 2;"
     >
         <form
             action="?/addRelation"
-            class="grid"
+            class="flex flex-col space-y-4"
             method="post"
             use:enhance
         >
-            <Label>
+            <Label class="text-black dark:text-white">
                 select person 1
-                <Select bind:value={addRelationPerson1Selected} items={personOptions} name="person1" />
+                <Select class="dark:bg-gray-900" bind:value={addRelationPerson1Selected} items={personOptions} name="person1" />
             </Label>
 
-            <Label>
+            <Label class="text-black dark:text-white">
                 select person 2
-                <Select bind:value={addRelationPerson2Selected} items={person2Options} name="person2"></Select>
+                <Select class="dark:bg-gray-900" bind:value={addRelationPerson2Selected} items={person2Options} name="person2"></Select>
             </Label>
 
             { #if form?.addRelationIncomplete }
                 <Helper color="red">Specify both persons!</Helper>
             { /if }
 
-            <Button class="btn variant-filled" type="submit">add relation</Button>
+            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">add relation</Button>
         </form>
     </div>
     <div
-        class="flex justify-center text-center rounded border-2 bg-gray-500 border-black p-5"
+        class="flex justify-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
         style="grid-area: 2 / 2 / 3 / 3;"
     >
         <form
             action="?/editPerson"
-            class="grid"
+            class="flex flex-col space-y-4"
             method="post"
             use:enhance
         >
 
-            <Label>
+            <Label class="text-black dark:text-white">
                 select person
-                <Select bind:value={editPersonSelected} items={personOptions} name="name" />
+                <Select class="dark:bg-gray-900" bind:value={editPersonSelected} items={personOptions} name="name" />
             </Label>
 
-            <Label for="name">type new name</Label>
-            <Input class="input" name="name" id="name" type="text" />
+            <Label class="text-black dark:text-white">
+                type new name
+                <Input class="dark:bg-gray-900" name="name" id="name" type="text" />
+            </Label>
 
             { #if form?.editPersonIncomplete }
                 <Helper color="red">
@@ -159,26 +163,26 @@ $: if (addRelationPerson1Selected) {
             { /if }
 
             
-            <Button class="btn variant-filled" type="submit">rename</Button>
+            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">rename</Button>
         </form>
 
     </div>
     <div
-        class="flex justify-center items-center text-center rounded border-2 bg-gray-500 border-black p-5"
+        class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
         style="grid-area: 3 / 1 / 4 / 3;"
     >
         <form
             action="?/removeRelation"
-            class="grid"
+            class="flex flex-col space-y-4"
             method="post"
             use:enhance
         >
-            <Label>
+            <Label class="text-black dark:text-white">
                 choose relation
-                <Select bind:value={removeRelationSelected} items={relationOptions} name="relation"/>
+                <Select class="dark:bg-gray-900" bind:value={removeRelationSelected} items={relationOptions} name="relation"/>
             </Label>
             
-            <Button class="btn variant-filled" type="submit">Remove Relation</Button>
+            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">remove Relation</Button>
         </form>
     </div>
 </div>

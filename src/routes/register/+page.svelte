@@ -7,42 +7,42 @@ export let form;
 </script>
 
 <Section name="register">
-    <Register>
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+    <Register divClass="w-full bg-white rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-black dark:border-gray-700">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8 ">
             <form class="flex flex-col space-y-6" method="post" use:enhance>
-                <h3 class="text-xl font-medium text-black dark:text-white p-0">create an account</h3>
-                <Label class="space-y-2">
+                <h3 class="text-xl font-bold text-black dark:text-white p-0">create an account</h3>
+                <Label class="space-y-2 text-black dark:text-white">
                     <span>username</span>
-                    <Input name="username" required type="text" />
+                    <Input class="dark:bg-gray-900" name="username" required type="text" />
                 </Label>
                 { #if form?.usernameInvalid }
                     <Helper color="red">
                         username is missing
                     </Helper>
                 { /if }
-                <Label class="space-y-2">
+                <Label class="space-y-2 text-black dark:text-white">
                     <span>name</span>
-                    <Input name="name" required type="text" />
+                    <Input class="dark:bg-gray-900" name="name" required type="text" />
                 </Label>
-                <Label class="space-y-2">
+                <Label class="space-y-2 text-black dark:text-white">
                     <span>password</span>
-                    <Input name="password" required type="password" />
+                    <Input class="dark:bg-gray-900" name="password" required type="password" />
                 </Label>
                 { #if form?.passwordInvalid }
                     <Helper color="red">
                         password is missing
                     </Helper>
                 { /if }
-                <Label class="space-y-2">
+                <Label class="space-y-2 text-black dark:text-white">
                     <span>confirm password</span>
-                    <Input name="password_confirm" required type="password" />
+                    <Input class="dark:bg-gray-900" name="password_confirm" required type="password" />
                 </Label>
                 { #if form?.passwordMismatch }
                     <Helper color="red">
                         passwords do not match
                     </Helper>
                 { /if }
-                <Button class="w-full1" type="submit">Create an account</Button>
+                <Button class="w-full bg-black dark:bg-white text-white dark:text-black" type="submit">Create an account</Button>
                 { #if form?.userDuplicate }
                     <Helper color="red">
                         user already exists
@@ -53,8 +53,8 @@ export let form;
                         an error occurred
                     </Helper>
                 { /if }
-                <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    already have an account? <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="/login">login here</a>
+                <div class="text-sm text-black dark:text-white">
+                    already have an account? <a class="font-semibold hover:underline text-black dark:text-white" href="/login">login here</a>
                 </div>
             </form>
         </div>
