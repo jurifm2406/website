@@ -9,19 +9,20 @@ import {
     Select,
     type SelectOptionType,
 } from "flowbite-svelte";
+import type { ActionData } from "./$types";
 
 export let data: {
     relations: Relation[];
     persons: Person[];
 };
 
-export let form;
+export let form: ActionData;
 
 const relationOptions: SelectOptionType<number>[] = data.relations.map(
     (relation) => {
         return {
             value: relation.id,
-            name: `${relation.person1.name} &harr; ${relation.person2.id}`,
+            name: `${relation.person1.name} ↔ ${relation.person2.name}`,
         };
     },
 );
@@ -76,9 +77,9 @@ $: if (addRelationPerson1Selected) {
                 select a person
                 <Select bind:value={removePersonSelected} class="select" items={personOptions} name="person" />
             </Label>
-            {#if form?.removePersonIncomplete}
+            { #if form?.removePersonIncomplete }
                 <Helper color="red">Specify a person!</Helper>
-            {/if}
+            { /if }
             
             <Button class="btn variant-filled" type="submit">remove person</Button>
         </form>
@@ -125,6 +126,10 @@ $: if (addRelationPerson1Selected) {
                 <Select bind:value={addRelationPerson2Selected} items={person2Options} name="person2"></Select>
             </Label>
 
+            { #if form?.addRelationIncomplete }
+                <Helper color="red">Specify both persons!</Helper>
+            { /if }
+
             <Button class="btn variant-filled" type="submit">add relation</Button>
         </form>
     </div>
@@ -141,11 +146,17 @@ $: if (addRelationPerson1Selected) {
 
             <Label>
                 select person
-                <Select bind:value={editPersonSelected} items={personOptions} name="person" />
+                <Select bind:value={editPersonSelected} items={personOptions} name="name" />
             </Label>
 
             <Label for="name">type new name</Label>
             <Input class="input" name="name" id="name" type="text" />
+
+            { #if form?.editPersonIncomplete }
+                <Helper color="red">
+                    you need to specify a person and name
+                </Helper>
+            { /if }
 
             
             <Button class="btn variant-filled" type="submit">rename</Button>

@@ -123,4 +123,4 @@ onMount(async () => {
 });
 </script>
 
-<div class="flex justify-center h-max w-screen" id="graph"></div>
+<div class="flex h-max w-screen" id="graph"></div>
