@@ -1,21 +1,21 @@
 <script lang="ts">
-    import "../app.css";
-    import { goto } from "$app/navigation";
-    import {
-        Avatar,
-        DarkMode,
-        Dropdown,
-        DropdownHeader,
-        DropdownItem,
-        NavBrand,
-        NavHamburger,
-        NavLi,
-        NavUl,
-        Navbar
-    } from "flowbite-svelte";
-    import type { LayoutData } from "./$types";
+import "../app.css";
+import { goto } from "$app/navigation";
+import {
+    Avatar,
+    DarkMode,
+    Dropdown,
+    DropdownHeader,
+    DropdownItem,
+    NavBrand,
+    NavHamburger,
+    NavLi,
+    NavUl,
+    Navbar,
+} from "flowbite-svelte";
+import type { LayoutData } from "./$types";
 
-    async function logout() {
+async function logout() {
     const response = await fetch("/logout", {
         method: "POST",
         body: "",

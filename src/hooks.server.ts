@@ -51,11 +51,8 @@ const authorization: Handle = async ({ event, resolve }) => {
         return redirect(303, "/");
     }
 
-    if (
-        event.url.pathname.startsWith("admin") &&
-        !event.locals.user?.admin
-    ) {
-        return redirect(303, "/")
+    if (event.url.pathname.startsWith("admin") && !event.locals.user?.admin) {
+        return redirect(303, "/");
     }
 
     return resolve(event);

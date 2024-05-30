@@ -1,8 +1,8 @@
 <script>
-    import Phaser from "phaser";
-    import { onMount } from "svelte";
+import Phaser from "phaser";
+import { onMount } from "svelte";
 
-    let game;
+let game;
 
 onMount(() => {
     const config = {
