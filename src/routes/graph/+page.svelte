@@ -15,6 +15,13 @@ import type { PageData } from "./$types";
 export let data: PageData;
 
 onMount(async () => {
+    let color: string;
+
+    if (localStorage.getItem("color-theme") === "dark") {
+        color = "#FFF";
+    } else {
+        color = "#000";
+    }
     // Specify the dimensions of the chart.
     const width = 928;
     const height = 600;
@@ -68,13 +75,15 @@ onMount(async () => {
             const g = enter.append("g");
 
             g.append("circle")
-                .attr("stroke", "#000")
+                .attr("fill", color)
                 .attr("stroke-width", "1.5")
                 .attr("r", 5);
 
             g.append("text")
+                .style("fill", color)
                 .attr("font", "monospace")
                 .attr("font-size", "10px")
+                .attr("transform", "translate(8, 2)")
                 .text((d) => d.id);
 
             return g; // Return the 'g' element to be used in the selection
