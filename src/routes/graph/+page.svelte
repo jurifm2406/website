@@ -22,14 +22,21 @@ onMount(async () => {
     } else {
         color = "#000";
     }
+
     // Specify the dimensions of the chart.
-    const width = 928;
-    const height = 600;
 
     // The force simulation mutates links and nodes, so create a copy
     // so that re-evaluating this cell produces the same result.
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
+
+    const rect = select("#graph").node().getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+
+    // Create the SVG container.
+    const svg = create("svg").attr("width", width).attr("height", height);
 
     // Create a simulation with several forces.
     const simulation = forceSimulation(nodes)
@@ -42,13 +49,6 @@ onMount(async () => {
         .force("charge", forceManyBody().strength(-150))
         .force("center", forceCenter(width / 2, height / 2))
         .on("tick", ticked);
-
-    // Create the SVG container.
-    const svg = create("svg")
-        .attr("width", "100vw")
-        .attr("height", "100vh")
-        .attr("viewBox", [0, 0, width, height])
-        .attr("style", "max-width: 100%; height: auto;");
 
     const g = svg.append("g");
 
@@ -132,4 +132,4 @@ onMount(async () => {
 });
 </script>
 
-<div class="flex h-max w-screen" id="graph"></div>
+<div class="flex w-full h-full" id="graph"></div>

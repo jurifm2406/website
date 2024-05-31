@@ -35,7 +35,7 @@ async function logout() {
 export let data: LayoutData;
 </script>
 
-<div class="relative px-8">
+<div class="relative px-8 h-screen">
     <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 start-0 border-b shadow bg-white dark:bg-black">
         <NavBrand href="/">
             <span id="subject" class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">franz münzner</span>
@@ -79,7 +79,7 @@ export let data: LayoutData;
             </NavLi>
         </NavUl>
     </Navbar>
-    <div class="overflow-scroll pt-24 h-max">
+    <div class="overflow-scroll pt-24 w-full h-full">
         <slot />
     </div>
 </div>
