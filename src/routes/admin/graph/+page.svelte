@@ -18,21 +18,23 @@ export let data: {
 
 export let form: ActionData;
 
-const relationOptions: SelectOptionType<number>[] = data.relations.map(
-    (relation) => {
+$: relationOptions = data.relations
+    .map((relation) => {
         return {
             value: relation.id,
             name: `${relation.person1.name} ↔ ${relation.person2.name}`,
         };
-    },
-);
+    })
+    .sort();
 
-const personOptions: SelectOptionType<number>[] = data.persons.map((person) => {
-    return {
-        value: person.id,
-        name: person.name,
-    };
-});
+$: personOptions = data.persons
+    .map((person) => {
+        return {
+            value: person.id,
+            name: person.name,
+        };
+    })
+    .sort();
 
 let person2Options: SelectOptionType<number>[] = [];
 
@@ -43,22 +45,24 @@ let addRelationPerson1Selected: number;
 let addRelationPerson2Selected: number;
 
 $: if (addRelationPerson1Selected) {
-    person2Options = personOptions.filter((person2) => {
-        for (const relation of data.relations) {
-            if (
-                (relation.person1.id === addRelationPerson1Selected &&
-                    relation.person2.id === person2.value) ||
-                (relation.person1.id === person2.value &&
-                    relation.person2.id === addRelationPerson1Selected)
-            ) {
-                return false;
+    person2Options = personOptions
+        .filter((person2) => {
+            for (const relation of data.relations) {
+                if (
+                    (relation.person1.id === addRelationPerson1Selected &&
+                        relation.person2.id === person2.value) ||
+                    (relation.person1.id === person2.value &&
+                        relation.person2.id === addRelationPerson1Selected)
+                ) {
+                    return false;
+                }
+                if (person2.value === addRelationPerson1Selected) {
+                    return false;
+                }
             }
-            if (person2.value === addRelationPerson1Selected) {
-                return false;
-            }
-        }
-        return true;
-    });
+            return true;
+        })
+        .sort();
 }
 </script>
 
@@ -148,7 +152,7 @@ $: if (addRelationPerson1Selected) {
 
             <Label class="text-black dark:text-white">
                 select person
-                <Select class="dark:bg-gray-900" bind:value={editPersonSelected} items={personOptions} name="name" />
+                <Select class="dark:bg-gray-900" bind:value={editPersonSelected} items={personOptions} name="person" />
             </Label>
 
             <Label class="text-black dark:text-white">

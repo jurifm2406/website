@@ -104,13 +104,14 @@ export const actions: Actions = {
     },
     addPerson: async (event) => {
         const data = await event.request.formData();
-        const name = data.get("name");
+        const name = data.get("person");
 
         if (!name) {
             return fail(422, { addPersonIncomplete: true });
         }
 
         if (typeof name !== "string") {
+            console.log("TypeError");
             return;
         }
 
@@ -124,7 +125,7 @@ export const actions: Actions = {
             return fail(422, { addPersonDuplicate: true });
         }
 
-        prisma.person.create({
+        await prisma.person.create({
             data: {
                 name,
             },
