@@ -44,8 +44,8 @@ export let data: LayoutData;
         <NavUl ulClass="flex flex-col items-center p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium">
             <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" active={true} href="/">home</NavLi>
             { #if data.user !== null }
-                <NavLi class="text-black dark:text-white" href="/graph">graph</NavLi>
                 <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" href="/graph">graph</NavLi>
+                <NavLi class="text-black md:hover:text-black dark:text-white hover:text-black" href="/cards">cards</NavLi>
                 { #if data.user.admin }
                     <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" href="/admin/graph">admin graph</NavLi>
                 { /if }
