@@ -42,7 +42,7 @@ export let form;
                         passwords do not match
                     </Helper>
                 { /if }
-                <Button class="w-full bg-black dark:bg-white text-white dark:text-black" type="submit">Create an account</Button>
+                <Button class="w-full bg-black hover:bg-black dark:bg-white text-white dark:text-black" type="submit">Create an account</Button>
                 { #if form?.userDuplicate }
                     <Helper color="red">
                         user already exists

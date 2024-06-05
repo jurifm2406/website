@@ -42,13 +42,14 @@ export let data: LayoutData;
         </NavBrand>
         <NavHamburger />
         <NavUl ulClass="flex flex-col items-center p-4 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium">
-            <NavLi class="text-black dark:text-white" active={true} href="/">home</NavLi>
+            <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" active={true} href="/">home</NavLi>
             { #if data.user !== null }
                 <NavLi class="text-black dark:text-white" href="/graph">graph</NavLi>
+                <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" href="/graph">graph</NavLi>
                 { #if data.user.admin }
-                    <NavLi class="text-black dark:text-white" href="/admin/graph">admin graph</NavLi>
+                    <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" href="/admin/graph">admin graph</NavLi>
                 { /if }
-                <NavLi class="text-black dark:text-white">
+                <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white">
                     <div class="flex items-center md:order-2">
                         <Avatar id="avatar-menu" src="" />
                         <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />

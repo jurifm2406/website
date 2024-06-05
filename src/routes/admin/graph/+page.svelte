@@ -85,7 +85,7 @@ $: if (addRelationPerson1Selected) {
                 <Helper color="red">Specify a person!</Helper>
             { /if }
             
-            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">remove person</Button>
+            <Button class="hover:bg-black btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">remove person</Button>
         </form>
     </div>
     <div
@@ -103,7 +103,7 @@ $: if (addRelationPerson1Selected) {
                 <Input class="dark:bg-gray-900" name="person" id="person" type="text" />
             </Label>
 
-            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">add person</Button>
+            <Button class="hover:bg-black btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">add person</Button>
             {#if form?.addPersonIncomplete}
                 <Helper color="red">Specify a person!</Helper>
             {/if}
@@ -136,7 +136,7 @@ $: if (addRelationPerson1Selected) {
                 <Helper color="red">Specify both persons!</Helper>
             { /if }
 
-            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">add relation</Button>
+            <Button class="btn variant-filled bg-black hover:bg-black text-white dark:bg-white dark:text-black" type="submit">add relation</Button>
         </form>
     </div>
     <div
@@ -167,7 +167,7 @@ $: if (addRelationPerson1Selected) {
             { /if }
 
             
-            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">rename</Button>
+            <Button class="btn variant-filled bg-black hover:bg-black text-white dark:bg-white dark:text-black" type="submit">rename</Button>
         </form>
 
     </div>
@@ -186,7 +186,7 @@ $: if (addRelationPerson1Selected) {
                 <Select class="dark:bg-gray-900" bind:value={removeRelationSelected} items={relationOptions} name="relation"/>
             </Label>
             
-            <Button class="btn variant-filled bg-black text-white dark:bg-white dark:text-black" type="submit">remove Relation</Button>
+            <Button class="btn variant-filled bg-black hover:bg-black text-white dark:bg-white dark:text-black" type="submit">remove Relation</Button>
         </form>
     </div>
 </div>

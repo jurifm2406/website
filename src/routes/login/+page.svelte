@@ -16,7 +16,7 @@ import { enhance } from "$app/forms";
                     <span>password</span>
                     <Input class="dark:bg-gray-900" name="password" required type="password" />
                 </Label>
-                <Button class="w-full text-white dark:text-black bg-black dark:bg-white" type="submit">Sign in</Button>
+                <Button class="hover:bg-black w-full text-white dark:text-black bg-black dark:bg-white" type="submit">Sign in</Button>
                 <p class="text-sm font-light text-black dark:text-white">
                     don’t have an account yet? <a class="font-medium text-black hover:underline dark:text-white" href="/register">register here</a>
                 </p>
