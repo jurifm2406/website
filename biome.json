@@ -12,6 +12,12 @@
             },
             "complexity": {
                 "noUselessEmptyExport": "off"
+            },
+            "style": {
+                "useConst": {
+                    "level": "warn",
+                    "fix": "unsafe"
+                }
             }
         }
     },
