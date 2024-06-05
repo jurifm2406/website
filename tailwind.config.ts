@@ -14,15 +14,15 @@ const config = {
             colors: {
                 primary: {
                     50: "#FFFFFF",
-                    100: "#EBEBEB",
-                    200: "#D7D7D7",
-                    300: "#C3C3C3",
-                    400: "#AFAFAF",
-                    500: "#9B9B9B",
-                    600: "#878787",
-                    700: "#737373",
-                    800: "#5F5F5F",
-                    900: "#000000",
+                    100: "#FFFFFF",
+                    200: "#FFFFFF",
+                    300: "#FFFFFF",
+                    400: "#FFFFFF",
+                    500: "#FFFFFF",
+                    600: "#FFFFFF",
+                    700: "#FFFFFF",
+                    800: "#FFFFFF",
+                    900: "#FFFFFF",
                 },
                 /*
                 primary: {
