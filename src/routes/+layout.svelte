@@ -25,7 +25,7 @@ async function logout() {
     });
 
     if (response.ok) {
-        goto("/", {
+        await goto("/", {
             replaceState: true,
             invalidateAll: true,
         });
@@ -51,8 +51,7 @@ export let data: LayoutData;
                 { /if }
                 <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white">
                     <div class="flex items-center md:order-2">
-                        <Avatar id="avatar-menu" src="" />
-                        <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
+                        <Avatar id="avatar-menu" src={data.user.avatar}/>
                     </div>
                     <Dropdown placement="bottom" triggeredBy="#avatar-menu">
                         <DropdownHeader>

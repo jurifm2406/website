@@ -15,6 +15,7 @@ model User {
   sessions      Session[]
   username      String    @unique
   name          String?
+  avatar        String?
   password_hash String
   admin         Boolean   @default(false)
 }

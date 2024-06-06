@@ -17,6 +17,7 @@ export const lucia = new Lucia(adapter, {
             username: attributes.username,
             name: attributes.name,
             admin: attributes.admin,
+            avatar: attributes.avatar,
         };
     },
 });
@@ -32,4 +33,5 @@ interface DatabaseUserAttributes {
     username: string;
     name?: string;
     admin: boolean;
+    avatar?: string;
 }

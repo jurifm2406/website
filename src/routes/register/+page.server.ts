@@ -60,12 +60,25 @@ export const actions: Actions = {
             });
         }
 
+        const colors: string[] = [];
+
+        for (let i = 0; i < 4; i++) {
+            colors.push(
+                "000000".replace(/0/g, () =>
+                    (~~(Math.random() * 16)).toString(16),
+                ),
+            );
+        }
+
+        const avatarURL: string = `https://source.boringavatars.com/beam/40/${username}?colors=${colors.toString()}`;
+
         await prisma.user.create({
             data: {
                 id: userId,
                 name: name,
                 username: username,
                 password_hash: passwordHash,
+                avatar: avatarURL,
             },
         });
 
