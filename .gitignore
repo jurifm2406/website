@@ -131,3 +131,6 @@ dist
 # prisma
 /prisma/*.db
 /prisma/*.db-journal
+
+# jetbrains
+.idea
