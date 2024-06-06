@@ -14,19 +14,13 @@ import type { PageData } from "./$types";
 
 export let data: PageData;
 
-onMount(async () => {
-    let color: string;
+let color = "#000";
 
+onMount(async () => {
     if (localStorage.getItem("color-theme") === "dark") {
         color = "#FFF";
-    } else {
-        color = "#000";
     }
 
-    // Specify the dimensions of the chart.
-
-    // The force simulation mutates links and nodes, so create a copy
-    // so that re-evaluating this cell produces the same result.
     const links = data.links.map((d) => ({ ...d }));
     const nodes = data.nodes.map((d) => ({ ...d }));
 
