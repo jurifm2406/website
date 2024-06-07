@@ -1,6 +1,7 @@
 <script lang="ts">import { Register, Section } from "flowbite-svelte-blocks";
 import { Button, Input, Label } from "flowbite-svelte";
 import { enhance } from "$app/forms";
+import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
 </script>
 
 <Section name="login">
@@ -10,13 +11,13 @@ import { enhance } from "$app/forms";
                 <h3 class="text-2xl font-extrabold text-black dark:text-white p-0">login</h3>
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>username</span>
-                    <Input class="dark:bg-gray-900" name="username" required type="text" />
+                    <Input class={ defaultInputStyle } name="username" required type="text" />
                 </Label>
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>password</span>
-                    <Input class="dark:bg-gray-900" name="password" required type="password" />
+                    <Input class={ defaultInputStyle } name="password" required type="password" />
                 </Label>
-                <Button class="hover:bg-black w-full text-white dark:text-black bg-black dark:bg-white" type="submit">Sign in</Button>
+                <Button class="{ defaultButtonStyle }" type="submit">login</Button>
                 <p class="text-sm font-light text-black dark:text-white">
                     don’t have an account yet? <a class="font-medium text-black hover:underline dark:text-white" href="/register">register here</a>
                 </p>

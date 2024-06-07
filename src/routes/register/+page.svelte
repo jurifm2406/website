@@ -1,5 +1,6 @@
 <script lang="ts">
 import { enhance } from "$app/forms";
+import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
 import { Button, Helper, Input, Label } from "flowbite-svelte";
 import { Register, Section } from "flowbite-svelte-blocks";
 
@@ -13,7 +14,7 @@ export let form;
                 <h3 class="text-xl font-extrabold text-black dark:text-white p-0">create an account</h3>
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>username</span>
-                    <Input class="dark:bg-gray-900" name="username" required type="text" />
+                    <Input class={ defaultInputStyle } name="username" required type="text" />
                 </Label>
                 { #if form?.usernameInvalid }
                     <Helper color="red">
@@ -22,11 +23,11 @@ export let form;
                 { /if }
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>name</span>
-                    <Input class="dark:bg-gray-900" name="name" required type="text" />
+                    <Input class={defaultInputStyle} name="name" required type="text" />
                 </Label>
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>password</span>
-                    <Input class="dark:bg-gray-900" name="password" required type="password" />
+                    <Input class={ defaultInputStyle } name="password" required type="password" />
                 </Label>
                 { #if form?.passwordInvalid }
                     <Helper color="red">
@@ -35,14 +36,14 @@ export let form;
                 { /if }
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>confirm password</span>
-                    <Input class="dark:bg-gray-900" name="password_confirm" required type="password" />
+                    <Input class={ defaultInputStyle } name="password_confirm" required type="password" />
                 </Label>
                 { #if form?.passwordMismatch }
                     <Helper color="red">
                         passwords do not match
                     </Helper>
                 { /if }
-                <Button class="w-full bg-black hover:bg-black dark:bg-white text-white dark:text-black" type="submit">Create an account</Button>
+                <Button class="w-full { defaultButtonStyle }" type="submit">register</Button>
                 { #if form?.userDuplicate }
                     <Helper color="red">
                         user already exists

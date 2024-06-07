@@ -1,4 +1,5 @@
 <script lang="ts">
+import { defaultButtonStyle } from "$lib/styles";
 import * as d3 from "d3";
 import { Button, Label, Range } from "flowbite-svelte";
 
@@ -40,6 +41,53 @@ function createDeck(counts: number[]) {
         deck = deck.concat(tempArr);
     }
     return deck;
+}
+
+function startGame() {
+    history = [];
+    let stack: string[] = [];
+    const deck: string[] = createDeck([
+        spades,
+        clubs,
+        hearts,
+        diamonds,
+        jokers,
+    ]);
+    const shuffledDeck = fisherYatesShuffle(deck);
+    const playerDecks = generatePlayerDecks(shuffledDeck, players);
+
+    let turn = 0;
+    while (true) {
+        for (let i = 0; i < playerDecks.length; i++) {
+            history.push({
+                person: `Person ${i + 1}`,
+                turn: turn,
+                cards: playerDecks[i].length,
+            });
+            const card = playerDecks[i].pop();
+            if (card !== undefined) {
+                stack.push(card);
+            }
+            if (
+                stack.length > 1 &&
+                (stack[0] === stack[stack.length - 1] || card === "joker")
+            ) {
+                playerDecks[i] = stack.concat(playerDecks[i]);
+                stack = [];
+            }
+            let nonZeroCount = 0;
+            for (const p of playerDecks) {
+                if (p.length > 0) {
+                    nonZeroCount++;
+                }
+            }
+            if (nonZeroCount < 2) {
+                createGraph();
+                return;
+            }
+            turn++;
+        }
+    }
 }
 
 function createGraph() {
@@ -143,53 +191,6 @@ function createGraph() {
 
     d3.select("#graph").append(() => svg.node());
 }
-
-function startGame() {
-    history = [];
-    let stack: string[] = [];
-    const deck: string[] = createDeck([
-        spades,
-        clubs,
-        hearts,
-        diamonds,
-        jokers,
-    ]);
-    const shuffledDeck = fisherYatesShuffle(deck);
-    const playerDecks = generatePlayerDecks(shuffledDeck, players);
-
-    let turn = 0;
-    while (true) {
-        for (let i = 0; i < playerDecks.length; i++) {
-            history.push({
-                person: `Person ${i + 1}`,
-                turn: turn,
-                cards: playerDecks[i].length,
-            });
-            const card = playerDecks[i].pop();
-            if (card !== undefined) {
-                stack.push(card);
-            }
-            if (
-                stack.length > 1 &&
-                (stack[0] === stack[stack.length - 1] || card === "joker")
-            ) {
-                playerDecks[i] = stack.concat(playerDecks[i]);
-                stack = [];
-            }
-            let nonZeroCount = 0;
-            for (const p of playerDecks) {
-                if (p.length > 0) {
-                    nonZeroCount++;
-                }
-            }
-            if (nonZeroCount < 2) {
-                createGraph();
-                return;
-            }
-            turn++;
-        }
-    }
-}
 </script>
 <div class="grid w-full h-full" style="grid-template-columns: 2fr 1fr">
     <div id="graph"></div>
@@ -207,7 +208,7 @@ function startGame() {
         <Label class="float-left">jokers</Label><p class="float-right">{jokers}</p>
         <Range size="sm" min="0" max="64" bind:value={jokers}></Range>
 
-        <Button class="w-full hover:bg-black dark:text-black bg-black dark:bg-white my-5" on:click={startGame}>start game</Button>
+        <Button class="w-full my-5 { defaultButtonStyle }" on:click={startGame}>start game</Button>
     </div>
 </div>
 
