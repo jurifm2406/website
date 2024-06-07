@@ -5,6 +5,7 @@ import {
     Avatar,
     DarkMode,
     Dropdown,
+    DropdownDivider,
     DropdownHeader,
     DropdownItem,
     NavBrand,
@@ -53,10 +54,12 @@ export let data: LayoutData;
                     <div class="flex items-center md:order-2">
                         <Avatar id="avatar-menu" src={data.user.avatar}/>
                     </div>
-                    <Dropdown placement="bottom" triggeredBy="#avatar-menu">
-                        <DropdownHeader>
+                    <Dropdown class="dark:bg-black dark:border dark:border-gray-600 dark:rounded" placement="bottom" triggeredBy="#avatar-menu">
+                        <DropdownItem>
                             <span class="block text-sm font-bold text-black dark:text-white">{ data.user.username }</span>
-                        </DropdownHeader>
+                        </DropdownItem>
+                        <DropdownItem class="text-black dark:text-white" href="/settings">settings</DropdownItem>
+                        <DropdownDivider />
                         <DropdownItem class="text-black dark:text-white" on:click={logout}>log out</DropdownItem>
                     </Dropdown>
                 </NavLi>
