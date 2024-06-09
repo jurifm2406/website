@@ -23,7 +23,7 @@ export let form;
                 { /if }
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>name</span>
-                    <Input class={defaultInputStyle} name="name" required type="text" />
+                    <Input class={defaultInputStyle} name="name" type="text" />
                 </Label>
                 <Label class="space-y-2 text-black dark:text-white">
                     <span>password</span>
