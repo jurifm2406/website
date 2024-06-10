@@ -3,6 +3,7 @@ import "../app.css";
 import { goto } from "$app/navigation";
 import {
     DarkMode,
+    Avatar as DefaultAvatar,
     Dropdown,
     DropdownDivider,
     DropdownHeader,
@@ -37,16 +38,7 @@ let dropdownOpen = false;
 
 export let data: LayoutData;
 
-const avatar = {
-    variant: data.user?.avatar?.variant,
-    hex: [
-        data.user?.avatar?.hex1 || "#92A1C6",
-        data.user?.avatar?.hex2 || "#146A7C",
-        data.user?.avatar?.hex3 || "#F0AB3D",
-        data.user?.avatar?.hex4 || "#C271B4",
-        data.user?.avatar?.hex5 || "#C20D90",
-    ],
-};
+const avatar = data.user?.avatar;
 </script>
 
 <div class="relative px-8 h-screen">
@@ -66,10 +58,10 @@ const avatar = {
                 <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white">
                     <div class="flex items-center md:order-2" >
                         <Avatar
-                        size={40}
-                        name={data.user?.name}
-                        variant={avatar.variant}
-                        colors={avatar.hex} />
+                        size={ 40 }
+                        name={ data.user?.username }
+                        variant={ avatar?.variant }
+                        colors={ [avatar?.hex1, avatar?.hex2, avatar?.hex3, avatar?.hex4, avatar?.hex5] } />
                     </div>
                     <Dropdown bind:open={dropdownOpen} class="dark:bg-black dark:border dark:border-gray-600 dark:rounded" placement="bottom">
                         <DropdownItem>
@@ -84,14 +76,8 @@ const avatar = {
                 <NavLi>
                     <div class="flex items-center md:order-2">
                         <button on:click={() => dropdownOpen = !dropdownOpen}>
-                            <Avatar
-                                size={40}
-                                name="franz münzner"
-                                variant="marble"
-                                colors={avatar.hex} />
-                            <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
+                            <DefaultAvatar src="" />
                         </button>
-
                     </div>
                     <Dropdown bind:open={dropdownOpen} class="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-black" placement="bottom">
                         <DropdownHeader>

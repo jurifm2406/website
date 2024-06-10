@@ -4,21 +4,25 @@ import {
     defaultButtonStyle,
     defaultInputStyle,
 } from "$lib/styles.js";
-import {
-    Avatar,
-    Button,
-    Fileupload,
-    Input,
-    Label,
-    Modal,
-} from "flowbite-svelte";
+import { Button, Input, Label, Modal } from "flowbite-svelte";
 import { Section } from "flowbite-svelte-blocks";
 import { ExclamationCircleOutline } from "flowbite-svelte-icons";
+import ColorPicker from "svelte-awesome-color-picker";
+import Avatar from "svelte-boring-avatars";
 import type { PageData } from "./$types";
-
-let value;
-let popupModal = false;
 export let data: PageData;
+
+const avatar = data.user?.avatar;
+
+let hex1 = avatar?.hex1;
+let hex2 = avatar?.hex2;
+let hex3 = avatar?.hex3;
+let hex4 = avatar?.hex4;
+let hex5 = avatar?.hex5;
+
+$: hexValues = [hex1, hex2, hex3, hex4, hex5];
+
+let popupModal = false;
 </script>
 
 <Section name="crudcreateform">
@@ -26,21 +30,31 @@ export let data: PageData;
     <form action="?/update" method="post" class="mb-4 sm:mb-6">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <div class="flex sm:col-span-2">
-                <Avatar size="lg" src={ data.user?.avatar }></Avatar>
-                <Label class="space-y-2 mb-2 ml-4 w-full flex items-end">
-                    <div class="text-black dark:text-white w-full">
-                        upload new avatar
-                        <Fileupload bind:value class="mt-2 block disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right focus:border-black focus:border border-gray-300 focus:ring-black dark:focus:border-white dark:focus:ring-white dark:placeholder-black dark:border-gray-600 dark:border border text-sm rounded-lg p-0 dark:text-white dark:bg-black text-black bg-white w-full" />
-                    </div>
-                </Label>
+                <Avatar
+                size={100}
+                name={ data.user?.username }
+                variant={ data.user?.avatar.variant }
+                colors={ hexValues }/>
+                <div class="grid gap-2 grid-cols-2 grid-rows-2 dark:cp-dark float-right dark:float-right ml-auto">
+                    <ColorPicker bind:hex={hex1}
+                                 name="hex1" />
+                    <ColorPicker bind:hex={hex2}
+                                 name="hex2" />
+                    <ColorPicker bind:hex={hex3}
+                                 name="hex3" />
+                    <ColorPicker bind:hex={hex4}
+                                 name="hex4" />
+                    <ColorPicker bind:hex={hex5}
+                                 name="hex5" />
+                </div>
             </div>
             <div>
                 <Label for="username" class="mb-2">username</Label>
-                <Input type="text" id="username" class={ defaultInputStyle } placeholder="Product brand" value={ data.user?.username } disabled />
+                <Input type="text" id="username" name="username" class={ defaultInputStyle } placeholder="username" value={ data.user?.username } disabled />
             </div>
             <div>
                 <Label for="name" class="mb-2">full name</Label>
-                <Input type="text" id="name" class={ defaultInputStyle } placeholder="person doe" value={ data.user?.name } required />
+                <Input type="text" id="name" name="name" class={ defaultInputStyle } value={ data.user?.name } />
             </div>
             <Button type="submit" class="sm:col-span-2 { defaultButtonStyle }">apply</Button>
             <Button on:click={() => (popupModal = true)} type="button" class="sm:col-span-2 {alertButtonStyle}">delete account</Button>

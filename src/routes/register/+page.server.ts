@@ -62,15 +62,13 @@ export const actions: Actions = {
 
         const colors: string[] = [];
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
             colors.push(
-                "000000".replace(/0/g, () =>
+                "#000000".replace(/0/g, () =>
                     (~~(Math.random() * 16)).toString(16),
                 ),
             );
         }
-
-        const avatarURL: string = `https://source.boringavatars.com/beam/40/${username}?colors=${colors.toString()}`;
 
         await prisma.user.create({
             data: {
@@ -78,7 +76,16 @@ export const actions: Actions = {
                 name: name,
                 username: username,
                 password_hash: passwordHash,
-                avatar: avatarURL,
+                avatar: {
+                    create: {
+                        variant: "beam",
+                        hex1: colors[0],
+                        hex2: colors[1],
+                        hex3: colors[2],
+                        hex4: colors[3],
+                        hex5: colors[4],
+                    },
+                },
             },
         });
 

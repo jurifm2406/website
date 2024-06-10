@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type="file"]::file-selector-button {
-    @apply bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white;
+@layer utilities {
+    .cp-dark {
+        --cp-bg-color: #000;
+        --cp-border-color: rgb(55 65 81);;
+        --cp-text-color: white;
+        --cp-input-color: #555;
+        --cp-button-hover-color: #777;
+    }
 }
