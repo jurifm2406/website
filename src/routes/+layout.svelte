@@ -2,7 +2,6 @@
 import "../app.css";
 import { goto } from "$app/navigation";
 import {
-    Avatar,
     DarkMode,
     Dropdown,
     DropdownDivider,
@@ -14,6 +13,7 @@ import {
     NavUl,
     Navbar,
 } from "flowbite-svelte";
+import Avatar from "svelte-boring-avatars";
 import type { LayoutData } from "./$types";
 
 async function logout() {
@@ -33,7 +33,20 @@ async function logout() {
     }
 }
 
+let dropdownOpen = false;
+
 export let data: LayoutData;
+
+const avatar = {
+    variant: data.user?.avatar?.variant,
+    hex: [
+        data.user?.avatar?.hex1 || "#92A1C6",
+        data.user?.avatar?.hex2 || "#146A7C",
+        data.user?.avatar?.hex3 || "#F0AB3D",
+        data.user?.avatar?.hex4 || "#C271B4",
+        data.user?.avatar?.hex5 || "#C20D90",
+    ],
+};
 </script>
 
 <div class="relative px-8 h-screen">
@@ -51,10 +64,14 @@ export let data: LayoutData;
                     <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white" href="/admin/graph">admin graph</NavLi>
                 { /if }
                 <NavLi class="text-black md:hover:text-black hover:text-black dark:text-white">
-                    <div class="flex items-center md:order-2">
-                        <Avatar id="avatar-menu" src={data.user.avatar}/>
+                    <div class="flex items-center md:order-2" >
+                        <Avatar
+                        size={40}
+                        name={data.user?.name}
+                        variant={avatar.variant}
+                        colors={avatar.hex} />
                     </div>
-                    <Dropdown class="dark:bg-black dark:border dark:border-gray-600 dark:rounded" placement="bottom" triggeredBy="#avatar-menu">
+                    <Dropdown bind:open={dropdownOpen} class="dark:bg-black dark:border dark:border-gray-600 dark:rounded" placement="bottom">
                         <DropdownItem>
                             <span class="block text-sm font-bold text-black dark:text-white">{ data.user.username }</span>
                         </DropdownItem>
@@ -66,10 +83,17 @@ export let data: LayoutData;
             { :else }
                 <NavLi>
                     <div class="flex items-center md:order-2">
-                        <Avatar id="avatar-menu" src="" />
-                        <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
+                        <button on:click={() => dropdownOpen = !dropdownOpen}>
+                            <Avatar
+                                size={40}
+                                name="franz münzner"
+                                variant="marble"
+                                colors={avatar.hex} />
+                            <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
+                        </button>
+
                     </div>
-                    <Dropdown class="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-black" placement="bottom" triggeredBy="#avatar-menu">
+                    <Dropdown bind:open={dropdownOpen} class="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-black" placement="bottom">
                         <DropdownHeader>
                             <span class="block text-sm font-bold text-black dark:text-white">not logged in</span>
                         </DropdownHeader>

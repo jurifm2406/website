@@ -15,9 +15,9 @@ model User {
   sessions      Session[]
   username      String    @unique
   name          String?
-  avatar        String?
   password_hash String
   admin         Boolean   @default(false)
+  avatar        Avatar?
 }
 
 model Session {
@@ -34,6 +34,20 @@ model Person {
   relations2 Relation[] @relation("PersonRelation2")
 
   @@map("people")
+}
+
+model Avatar {
+  id      Int    @id @unique @default(autoincrement())
+  variant String @default("beam")
+  hex1    String @default("#92A1C6")
+  hex2    String @default("#146A7C")
+  hex3    String @default("#F0AB3D")
+  hex4    String @default("#C271B4")
+  hex5    String @default("#C20D90")
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId  String @unique
+
+  @@map("avatars")
 }
 
 model Relation {
