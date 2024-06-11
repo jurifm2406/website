@@ -1,4 +1,5 @@
 import { lucia } from "$lib/server/auth";
+import { prisma } from "$lib/server/prisma";
 import type { Handle } from "@sveltejs/kit";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
@@ -28,6 +29,21 @@ const authentication: Handle = async ({ event, resolve }) => {
         });
     }
     event.locals.user = user;
+    if (event.locals.user) {
+        event.locals.user.avatar = await prisma.avatar.findUnique({
+            where: {
+                userId: event.locals.user.id,
+            },
+            select: {
+                variant: true,
+                hex1: true,
+                hex2: true,
+                hex3: true,
+                hex4: true,
+                hex5: true,
+            },
+        });
+    }
     event.locals.session = session;
 
     return resolve(event);
