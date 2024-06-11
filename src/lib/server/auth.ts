@@ -36,7 +36,7 @@ interface DatabaseUserAttributes {
     name?: string;
     admin: boolean;
     avatar: {
-        variant: "bauhaus" | "beam";
+        variant: string;
         hex1: string;
         hex2: string;
         hex3: string;

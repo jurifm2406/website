@@ -29,20 +29,22 @@ const authentication: Handle = async ({ event, resolve }) => {
         });
     }
     event.locals.user = user;
-    if (event.locals.user) {
-        event.locals.user.avatar = await prisma.avatar.findUnique({
-            where: {
-                userId: event.locals.user.id,
-            },
-            select: {
-                variant: true,
-                hex1: true,
-                hex2: true,
-                hex3: true,
-                hex4: true,
-                hex5: true,
-            },
-        });
+
+    const avatar = await prisma.avatar.findUnique({
+        where: {
+            userId: event.locals.user?.id,
+        },
+        select: {
+            variant: true,
+            hex1: true,
+            hex2: true,
+            hex3: true,
+            hex4: true,
+            hex5: true,
+        },
+    });
+    if (event.locals.user && avatar) {
+        event.locals.user.avatar = avatar;
     }
     event.locals.session = session;
 
