@@ -3,8 +3,9 @@ import { enhance } from "$app/forms";
 import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
 import { Button, Helper, Input, Label } from "flowbite-svelte";
 import { Register, Section } from "flowbite-svelte-blocks";
+import type { ActionData } from "./$types";
 
-export let form;
+export let form: ActionData;
 </script>
 
 <Section name="register">

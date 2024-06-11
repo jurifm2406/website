@@ -19,7 +19,7 @@ export const actions: Actions = {
             !/^[a-z0-9_-]+$/.test(username)
         ) {
             return fail(400, {
-                message: "Invalid username",
+                incorrect: true,
             });
         }
         if (
@@ -28,7 +28,7 @@ export const actions: Actions = {
             password.length > 255
         ) {
             return fail(400, {
-                message: "Invalid password",
+                incorrect: true,
             });
         }
 
@@ -40,7 +40,7 @@ export const actions: Actions = {
 
         if (!existingUser) {
             return fail(400, {
-                message: "Incorrect username or password",
+                incorrect: true,
             });
         }
 
@@ -51,7 +51,7 @@ export const actions: Actions = {
 
         if (!validPassword) {
             return fail(400, {
-                message: "Incorrect username or password",
+                incorrect: true,
             });
         }
 

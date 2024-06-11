@@ -1,7 +1,10 @@
 <script lang="ts">import { Register, Section } from "flowbite-svelte-blocks";
-import { Button, Input, Label } from "flowbite-svelte";
+import { Button, Helper, Input, Label } from "flowbite-svelte";
 import { enhance } from "$app/forms";
 import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
+import type { ActionData } from "./$types";
+
+export let form: ActionData
 </script>
 
 <Section name="login">
@@ -18,6 +21,11 @@ import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
                     <Input class={ defaultInputStyle } name="password" required type="password" />
                 </Label>
                 <Button class="{ defaultButtonStyle }" type="submit">login</Button>
+                { #if form?.incorrect}
+                    <Helper color="red">
+                        invalid username or password
+                    </Helper>
+                { /if }
                 <p class="text-sm font-light text-black dark:text-white">
                     don’t have an account yet? <a class="font-medium text-black hover:underline dark:text-white" href="/register">register here</a>
                 </p>
