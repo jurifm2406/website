@@ -46,6 +46,6 @@ export const actions = {
             },
         });
 
-        await redirect(303, "/");
+        redirect(303, "/");
     },
 } satisfies Actions;

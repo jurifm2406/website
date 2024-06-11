@@ -44,9 +44,7 @@
         "@tarekraafat/autocomplete.js": "^10.2.7",
         "bcrypt": "^5.1.1",
         "colord": "^2.9.3",
-        "colyseus.js": "^0.15.18",
         "d3": "^7.9.0",
-        "phaser": "^3.80.1",
         "svelte-boring-avatars": "^1.2.6"
     }
 }

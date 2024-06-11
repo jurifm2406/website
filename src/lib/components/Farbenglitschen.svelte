@@ -196,17 +196,17 @@ function createGraph() {
     <div id="graph"></div>
     <div id="sidebar">
         <Label class="float-left">players</Label><p class="float-right">{players}</p>
-        <Range size="sm" min="2" max="64" bind:value={players}></Range>
+        <Range bind:value={players} max="64" min="2" size="sm"></Range>
         <Label class="float-left">spades</Label><p class="float-right">{spades}</p>
-        <Range size="sm" min="0" max="256" bind:value={spades}></Range>
+        <Range bind:value={spades} max="256" min="0" size="sm"></Range>
         <Label class="float-left">clubs</Label><p class="float-right">{clubs}</p>
-        <Range size="sm" min="0" max="256" bind:value={clubs}></Range>
+        <Range bind:value={clubs} max="256" min="0" size="sm"></Range>
         <Label class="float-left">hearts</Label><p class="float-right">{hearts}</p>
-        <Range size="sm" min="0" max="256" bind:value={hearts}></Range>
+        <Range bind:value={hearts} max="256" min="0" size="sm"></Range>
         <Label class="float-left">diamonds</Label><p class="float-right">{diamonds}</p>
-        <Range size="sm" min="0" max="256" bind:value={diamonds}></Range>
+        <Range bind:value={diamonds} max="256" min="0" size="sm"></Range>
         <Label class="float-left">jokers</Label><p class="float-right">{jokers}</p>
-        <Range size="sm" min="0" max="64" bind:value={jokers}></Range>
+        <Range bind:value={jokers} max="64" min="0" size="sm"></Range>
 
         <Button class="w-full my-5 { defaultButtonStyle }" on:click={startGame}>start game</Button>
     </div>

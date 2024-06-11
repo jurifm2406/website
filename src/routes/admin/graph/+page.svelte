@@ -80,7 +80,7 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 select a person
-                <Select class={ defaultInputStyle } bind:value={removePersonSelected} items={personOptions} name="person" />
+                <Select bind:value={removePersonSelected} class={ defaultInputStyle } items={personOptions} name="person" />
             </Label>
             { #if form?.removePersonIncomplete }
                 <Helper color="red">Specify a person!</Helper>
@@ -101,7 +101,7 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 type name
-                <Input class={ defaultInputStyle } name="person" id="person" type="text" />
+                <Input class={ defaultInputStyle } id="person" name="person" type="text" />
             </Label>
 
             <Button class={ defaultButtonStyle } type="submit">add person</Button>
@@ -125,12 +125,12 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 select person 1
-                <Select class={ defaultInputStyle } bind:value={addRelationPerson1Selected} items={personOptions} name="person1" />
+                <Select bind:value={addRelationPerson1Selected} class={ defaultInputStyle } items={personOptions} name="person1" />
             </Label>
 
             <Label class="text-black dark:text-white">
                 select person 2
-                <Select class={ defaultInputStyle } bind:value={addRelationPerson2Selected} items={person2Options} name="person2"></Select>
+                <Select bind:value={addRelationPerson2Selected} class={ defaultInputStyle } items={person2Options} name="person2"></Select>
             </Label>
 
             { #if form?.addRelationIncomplete }
@@ -153,12 +153,12 @@ $: if (addRelationPerson1Selected) {
 
             <Label class="text-black dark:text-white">
                 select person
-                <Select class={ defaultInputStyle } bind:value={editPersonSelected} items={personOptions} name="person" />
+                <Select bind:value={editPersonSelected} class={ defaultInputStyle } items={personOptions} name="person" />
             </Label>
 
             <Label class="text-black dark:text-white">
                 type new name
-                <Input class={ defaultInputStyle } name="name" id="name" type="text" />
+                <Input class={ defaultInputStyle } id="name" name="name" type="text" />
             </Label>
 
             { #if form?.editPersonIncomplete }
@@ -184,7 +184,7 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 choose relation
-                <Select class={ defaultInputStyle } bind:value={removeRelationSelected} items={relationOptions} name="relation"/>
+                <Select bind:value={removeRelationSelected} class={ defaultInputStyle } items={relationOptions} name="relation"/>
             </Label>
             
             <Button class={ defaultButtonStyle } type="submit">remove Relation</Button>
