@@ -12,12 +12,6 @@
             },
             "complexity": {
                 "noUselessEmptyExport": "off"
-            },
-            "style": {
-                "useConst": {
-                    "level": "warn",
-                    "fix": "unsafe"
-                }
             }
         }
     },
@@ -25,5 +19,17 @@
         "enabled": true,
         "indentWidth": 4,
         "indentStyle": "space"
-    }
+    },
+    "overrides": [
+        {
+            "include": ["*.svelte"],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "useConst": "off"
+                    }
+                }
+            }
+        }
+    ]
 }
