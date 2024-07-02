@@ -134,3 +134,6 @@ dist
 
 # jetbrains
 .idea
+
+.svelte-kit
+.DS_Store

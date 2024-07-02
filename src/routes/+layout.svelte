@@ -1,6 +1,7 @@
 <script lang="ts">
 import "../app.css";
 import { goto } from "$app/navigation";
+import { dark } from "$lib/stores";
 import {
     DarkMode,
     Avatar as DefaultAvatar,
@@ -14,6 +15,7 @@ import {
     NavUl,
     Navbar,
 } from "flowbite-svelte";
+import { onMount } from "svelte";
 import Avatar from "svelte-boring-avatars";
 import type { LayoutData } from "./$types";
 
@@ -39,6 +41,10 @@ let dropdownOpen = false;
 export let data: LayoutData;
 
 const avatar = data.user?.avatar;
+
+onMount(() => {
+    dark.set(localStorage.getItem("color-theme") === "dark");
+});
 </script>
 
 <div class="relative px-8 h-screen">
@@ -88,7 +94,9 @@ const avatar = data.user?.avatar;
                 </NavLi>
             { /if }
             <NavLi>
-                <DarkMode />
+                <div on:click={() => {dark.set(localStorage.getItem("color-theme") === "dark")}} tabindex="0">
+                    <DarkMode />
+                </div>
             </NavLi>
         </NavUl>
     </Navbar>

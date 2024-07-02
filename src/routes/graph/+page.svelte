@@ -1,129 +1,165 @@
-<script lang="ts">
-import {
-    create,
-    drag,
-    forceCenter,
-    forceLink,
-    forceManyBody,
-    forceSimulation,
-    select,
-    zoom,
-} from "d3";
-import { onMount } from "svelte";
-import type { PageData } from "./$types";
+<script>
+    import { onMount } from "svelte";
 
-export let data: PageData;
+    import {
+        scaleLinear,
+        scaleOrdinal,
+        forceSimulation,
+        forceLink,
+        forceManyBody,
+        forceCenter,
+        zoom,
+        zoomIdentity,
+        drag,
+        select,
+        selectAll,
+    } from "d3";
+    import { dark } from "$lib/stores";
 
-let color = "#000";
+    let d3 = {
+        zoom,
+        zoomIdentity,
+        scaleLinear,
+        scaleOrdinal,
+        select,
+        selectAll,
+        drag,
+        forceSimulation,
+        forceLink,
+        forceManyBody,
+        forceCenter,
+    };
 
-onMount(async () => {
-    if (localStorage.getItem("color-theme") === "dark") {
-        color = "#FFF";
+    export let data;
+
+    let svg;
+    let { width, height } = 0;
+    const nodeRadius = 6;
+
+    $: color = "#000";
+    $: links = data.links.map((d) => Object.create(d));
+    $: nodes = data.nodes.map((d) => Object.create(d));
+
+    dark.subscribe((value) => {
+        if (value === false) {
+            color = "#000";
+        }
+        if (value === true) {
+            color = "#fff";
+        }
+    });
+
+    let transform = d3.zoomIdentity;
+    let simulation;
+    onMount(() => {
+        ({ width, height } = d3.select(svg).node().getBoundingClientRect());
+
+        simulation = d3
+            .forceSimulation(nodes)
+            .force(
+                "link",
+                d3
+                    .forceLink(links)
+                    .distance(100)
+                    .id((d) => d.id),
+            )
+            .force("charge", d3.forceManyBody().strength(-100))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", simulationUpdate);
+
+        d3.select(svg)
+            .call(
+                d3
+                    .drag()
+                    .container(svg)
+                    .subject(dragsubject)
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended),
+            )
+            .call(d3.zoom().on("zoom", zoomed));
+    });
+
+    function simulationUpdate() {
+        simulation.tick();
+        nodes = [...nodes];
+        links = [...links];
     }
 
-    const links = data.links.map((d) => ({ ...d }));
-    const nodes = data.nodes.map((d) => ({ ...d }));
-
-    const rect = select("#graph").node().getBoundingClientRect();
-
-    const width = rect.width;
-    const height = rect.height;
-
-    // Create the SVG container.
-    const svg = create("svg").attr("width", width).attr("height", height);
-
-    // Create a simulation with several forces.
-    const simulation = forceSimulation(nodes)
-        .force(
-            "link",
-            forceLink(links)
-                .distance(60)
-                .id((d) => d.id),
-        )
-        .force("charge", forceManyBody().strength(-150))
-        .force("center", forceCenter(width / 2, height / 2))
-        .on("tick", ticked);
-
-    const g = svg.append("g");
-
-    function handleZoom(e) {
-        g.attr("transform", e.transform);
+    function zoomed(currentEvent) {
+        transform = currentEvent.transform;
+        simulationUpdate();
     }
 
-    svg.call(zoom().on("zoom", handleZoom));
-
-    // Add a line for each link, and a circle for each node.
-    const link = g
-        .append("g")
-        .selectAll()
-        .data(links)
-        .join("line")
-        .attr("stroke", "#9ca3af")
-        .attr("stroke-opacity", "0.6");
-
-    const node = g
-        .append("g")
-        .selectAll()
-        .data(nodes)
-        .join((enter) => {
-            const g = enter.append("g");
-
-            g.append("circle")
-                .attr("fill", color)
-                .attr("stroke-width", "1.5")
-                .attr("r", 5);
-
-            g.append("text")
-                .style("fill", color)
-                .attr("font", "monospace")
-                .attr("font-size", "10px")
-                .attr("transform", "translate(8, 2)")
-                .text((d) => d.id);
-
-            return g; // Return the 'g' element to be used in the selection
-        });
-
-    // Add a drag behavior.
-    node.call(
-        drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended),
-    );
-
-    // Set the position attributes of links and nodes each time the simulation ticks.
-    function ticked() {
-        link.attr("x1", (d) => d.source.x)
-            .attr("y1", (d) => d.source.y)
-            .attr("x2", (d) => d.target.x)
-            .attr("y2", (d) => d.target.y);
-
-        node.attr("transform", (d) => `translate(${d.x},${d.y})`);
+    function dragsubject(currentEvent) {
+        const node = simulation.find(
+            transform.invertX(currentEvent.x),
+            transform.invertY(currentEvent.y),
+            nodeRadius,
+        );
+        if (node) {
+            node.x = transform.applyX(node.x);
+            node.y = transform.applyY(node.y);
+        }
+        return node;
     }
 
-    // Reheat the simulation when drag starts, and fix the subject position.
-    function dragstarted(event) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        event.subject.fx = event.subject.x;
-        event.subject.fy = event.subject.y;
+    function dragstarted(currentEvent) {
+        if (!currentEvent.active) simulation.alphaTarget(0.3).restart();
+        currentEvent.subject.fx = transform.invertX(currentEvent.subject.x);
+        currentEvent.subject.fy = transform.invertY(currentEvent.subject.y);
     }
 
-    // Update the subject (dragged node) position during drag.
-    function dragged(event) {
-        event.subject.fx = event.x;
-        event.subject.fy = event.y;
+    function dragged(currentEvent) {
+        currentEvent.subject.fx = transform.invertX(currentEvent.x);
+        currentEvent.subject.fy = transform.invertY(currentEvent.y);
     }
 
-    // Restore the target alpha so the simulation cools after dragging ends.
-    // Unfix the subject position now that it’s no longer being dragged.
-    function dragended(event) {
-        if (!event.active) simulation.alphaTarget(0);
-        event.subject.fx = null;
-        event.subject.fy = null;
+    function dragended(currentEvent) {
+        if (!currentEvent.active) simulation.alphaTarget(0);
+        currentEvent.subject.fx = null;
+        currentEvent.subject.fy = null;
     }
 
-    select("#graph").append(() => svg.node());
-});
+    function resize() {
+        ({ width, height } = svg.getBoundingClientRect());
+    }
 </script>
 
-<div class="flex w-full h-full" id="graph"></div>
+<svelte:window on:resize={resize} />
+
+<svg bind:this={svg} class="w-full h-full">
+    {#each links as link}
+        <g stroke="#999" stroke-opacity="0.6">
+            <line
+                x1={link.source.x}
+                y1={link.source.y}
+                x2={link.target.x}
+                y2={link.target.y}
+                transform="translate({transform.x} {transform.y}) scale({transform.k} {transform.k})"
+            >
+                <title>{link.source.id}</title>
+            </line>
+        </g>
+    {/each}
+
+    {#each nodes as point}
+        <g fill={color} class="node">
+            <circle
+                r="6"
+                cx={point.x}
+                cy={point.y}
+                transform="translate({transform.x} {transform.y}) scale({transform.k} {transform.k})"
+            />
+            <text
+                x={point.x}
+                y={point.y + 15}
+                transform="translate({transform.x} {transform.y}) scale({transform.k} {transform.k})"
+                text-anchor="middle"
+                font-size="10px"
+            >
+                {point.id}
+            </text>
+        </g>
+    {/each}
+</svg>
