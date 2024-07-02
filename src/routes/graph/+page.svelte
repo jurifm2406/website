@@ -1,6 +1,5 @@
 <script>
     import { onMount } from "svelte";
-
     import {
         scaleLinear,
         scaleOrdinal,
@@ -29,12 +28,12 @@
         forceManyBody,
         forceCenter,
     };
+    let svg;
+    let width = 0;
+    let height = 0;
+    const nodeRadius = 6;
 
     export let data;
-
-    let svg;
-    let { width, height } = 0;
-    const nodeRadius = 6;
 
     $: color = "#000";
     $: links = data.links.map((d) => Object.create(d));
