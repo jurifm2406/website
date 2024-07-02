@@ -14,6 +14,7 @@
         selectAll,
     } from "d3";
     import { dark } from "$lib/stores";
+    import { get } from "svelte/store";
 
     let d3 = {
         zoom,
@@ -35,18 +36,11 @@
 
     export let data;
 
-    $: color = "#000";
+    $: color = get(dark) ? "#fff" : "#000";
     $: links = data.links.map((d) => Object.create(d));
     $: nodes = data.nodes.map((d) => Object.create(d));
 
-    dark.subscribe((value) => {
-        if (value === false) {
-            color = "#000";
-        }
-        if (value === true) {
-            color = "#fff";
-        }
-    });
+    dark.subscribe((value) => (color = value ? "#fff" : "#000"));
 
     let transform = d3.zoomIdentity;
     let simulation;
@@ -143,14 +137,16 @@
     {/each}
 
     {#each nodes as point}
-        <g fill={color} class="node">
+        <g class="node">
             <circle
+                fill={color}
                 r="6"
                 cx={point.x}
                 cy={point.y}
                 transform="translate({transform.x} {transform.y}) scale({transform.k} {transform.k})"
             />
             <text
+                fill={color}
                 x={point.x}
                 y={point.y + 15}
                 transform="translate({transform.x} {transform.y}) scale({transform.k} {transform.k})"

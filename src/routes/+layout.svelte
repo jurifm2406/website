@@ -1,7 +1,6 @@
 <script lang="ts">
     import "../app.css";
     import { goto } from "$app/navigation";
-    import { dark } from "$lib/stores";
     import {
         DarkMode,
         Avatar as DefaultAvatar,
@@ -15,9 +14,10 @@
         NavUl,
         Navbar,
     } from "flowbite-svelte";
-    import { onMount } from "svelte";
     import Avatar from "svelte-boring-avatars";
     import type { LayoutData } from "./$types";
+    import { dark } from "$lib/stores";
+    import { onMount } from "svelte";
 
     async function logout() {
         const response = await fetch("/logout", {
@@ -65,13 +65,17 @@
               hex5: data.user.avatar.hex5,
           }
         : {
-              variant: "pixel",
+              variant: "",
               hex1: "",
               hex2: "",
               hex3: "",
               hex4: "",
               hex5: "",
           };
+
+    onMount(() => {
+        dark.set(localStorage.getItem("color-theme") === "dark");
+    });
 </script>
 
 <div class="relative px-8 h-screen">
@@ -115,7 +119,9 @@
                         <Avatar
                             size={40}
                             name={data.user?.username}
-                            variant={parseVariant(avatar?.variant)}
+                            variant={parseVariant(
+                                JSON.stringify(avatar.variant),
+                            )}
                             colors={[
                                 avatar?.hex1,
                                 avatar?.hex2,
@@ -172,7 +178,10 @@
                     </Dropdown>
                 </NavLi>
             {/if}
-            <NavLi>
+            <NavLi
+                on:click={() =>
+                    dark.set(localStorage.getItem("color-theme") === "dark")}
+            >
                 <DarkMode />
             </NavLi>
         </NavUl>
