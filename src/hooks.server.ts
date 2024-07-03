@@ -30,19 +30,16 @@ const authentication: Handle = async ({ event, resolve }) => {
     }
     event.locals.user = user;
 
-    const avatar = await prisma.avatar.findUnique({
+    const avatar = await prisma.avatar.findFirst({
         where: {
             userId: event.locals.user?.id,
         },
         select: {
             variant: true,
-            hex1: true,
-            hex2: true,
-            hex3: true,
-            hex4: true,
-            hex5: true,
+            hex: true,
         },
     });
+
     if (event.locals.user && avatar) {
         event.locals.user.avatar = avatar;
     }

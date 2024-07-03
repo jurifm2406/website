@@ -1,81 +1,48 @@
 <script lang="ts">
-    import "../app.css";
-    import { goto } from "$app/navigation";
-    import {
-        DarkMode,
-        Avatar as DefaultAvatar,
-        Dropdown,
-        DropdownDivider,
-        DropdownHeader,
-        DropdownItem,
-        NavBrand,
-        NavHamburger,
-        NavLi,
-        NavUl,
-        Navbar,
-    } from "flowbite-svelte";
-    import Avatar from "svelte-boring-avatars";
-    import type { LayoutData } from "./$types";
-    import { dark } from "$lib/stores";
-    import { onMount } from "svelte";
+import "../app.css";
+import { goto } from "$app/navigation";
+import {
+    DarkMode,
+    Avatar as DefaultAvatar,
+    Dropdown,
+    DropdownDivider,
+    DropdownHeader,
+    DropdownItem,
+    NavBrand,
+    NavHamburger,
+    NavLi,
+    NavUl,
+    Navbar,
+} from "flowbite-svelte";
+import Avatar from "svelte-boring-avatars";
+import type { LayoutData } from "./$types";
+import { dark } from "$lib/stores";
+import { onMount } from "svelte";
 
-    async function logout() {
-        const response = await fetch("/logout", {
-            method: "POST",
-            body: "",
-            headers: {
-                "content-type": "application/json",
-            },
-        });
-
-        if (response.ok) {
-            await goto("/", {
-                replaceState: true,
-                invalidateAll: true,
-            });
-        }
-    }
-
-    let dropdownOpen = false;
-
-    export let data: LayoutData;
-
-    const variants = ["beam", "bauhaus"] as const;
-    type Variant = (typeof variants)[number];
-
-    function parseVariant(unsafeVariant: string): Variant {
-        const maybeVariant: unknown = JSON.parse(unsafeVariant);
-        const variant = variants.find(
-            (validVariant) => validVariant === maybeVariant,
-        );
-        if (variant) {
-            // `sheepName` comes from the list of `sheepNames` so the compiler is happy.
-            return variant;
-        }
-        throw new Error("Not a valid variant!");
-    }
-
-    const avatar = data.user?.avatar
-        ? {
-              variant: data.user.avatar.variant,
-              hex1: data.user.avatar.hex1,
-              hex2: data.user.avatar.hex2,
-              hex3: data.user.avatar.hex3,
-              hex4: data.user.avatar.hex4,
-              hex5: data.user.avatar.hex5,
-          }
-        : {
-              variant: "",
-              hex1: "",
-              hex2: "",
-              hex3: "",
-              hex4: "",
-              hex5: "",
-          };
-
-    onMount(() => {
-        dark.set(localStorage.getItem("color-theme") === "dark");
+async function logout() {
+    const response = await fetch("/logout", {
+        method: "POST",
+        body: "",
+        headers: {
+            "content-type": "application/json",
+        },
     });
+
+    if (response.ok) {
+        await goto("/", {
+            replaceState: true,
+            invalidateAll: true,
+        });
+    }
+}
+
+let dropdownOpen = false;
+
+export let data: LayoutData;
+
+onMount(() => {
+    dark.set(localStorage.getItem("color-theme") === "dark");
+});
 </script>
 
 <div class="relative px-8 h-screen">
@@ -119,16 +86,8 @@
                         <Avatar
                             size={40}
                             name={data.user?.username}
-                            variant={parseVariant(
-                                JSON.stringify(avatar.variant),
-                            )}
-                            colors={[
-                                avatar?.hex1,
-                                avatar?.hex2,
-                                avatar?.hex3,
-                                avatar?.hex4,
-                                avatar?.hex5,
-                            ]}
+                            variant={data.user.avatar.variant}
+                            colors={data.user.avatar.hex}
                         />
                     </div>
                     <Dropdown

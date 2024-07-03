@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -37,15 +37,11 @@ model Person {
 }
 
 model Avatar {
-  id      Int    @id @unique @default(autoincrement())
-  variant String @default("beam")
-  hex1    String @default("#92A1C6")
-  hex2    String @default("#146A7C")
-  hex3    String @default("#F0AB3D")
-  hex4    String @default("#C271B4")
-  hex5    String @default("#C20D90")
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId  String @unique
+  id      Int      @id @unique @default(autoincrement())
+  variant String   @default("beam")
+  hex     String[] @default(["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"])
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId  String   @unique
 
   @@map("avatars")
 }
@@ -54,8 +50,8 @@ model Relation {
   id        Int    @id @default(autoincrement())
   person1Id Int
   person2Id Int
-  person1   Person @relation("PersonRelation1", fields: [person1Id], references: [id])
-  person2   Person @relation("PersonRelation2", fields: [person2Id], references: [id])
+  person1   Person @relation("PersonRelation1", fields: [person1Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  person2   Person @relation("PersonRelation2", fields: [person2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("relations")
 }
