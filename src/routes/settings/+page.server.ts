@@ -30,11 +30,13 @@ export const actions = {
                     userId: event.locals.user?.id,
                 },
                 data: {
-                    hex1: data.hex1,
-                    hex2: data.hex2,
-                    hex3: data.hex3,
-                    hex4: data.hex4,
-                    hex5: data.hex5,
+                    hex: [
+                        data.hex1,
+                        data.hex2,
+                        data.hex3,
+                        data.hex4,
+                        data.hex5,
+                    ],
                 },
             });
         }
