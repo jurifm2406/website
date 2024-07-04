@@ -79,11 +79,7 @@ export const actions: Actions = {
                 avatar: {
                     create: {
                         variant: "beam",
-                        hex1: colors[0],
-                        hex2: colors[1],
-                        hex3: colors[2],
-                        hex4: colors[3],
-                        hex5: colors[4],
+                        hex: colors,
                     },
                 },
             },
