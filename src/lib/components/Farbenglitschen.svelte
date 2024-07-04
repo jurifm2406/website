@@ -191,6 +191,17 @@ function createGraph() {
 
     d3.select("#graph").append(() => svg.node());
 }
+
+function reset() {
+    players = 2;
+    spades = 13;
+    clubs = 13;
+    hearts = 13;
+    diamonds = 13;
+    jokers = 4;
+
+    d3.select("#graph").html("");
+}
 </script>
 <div class="grid w-full h-full" style="grid-template-columns: 2fr 1fr">
     <div id="graph"></div>
@@ -209,6 +220,7 @@ function createGraph() {
         <Range bind:value={jokers} max="64" min="0" size="sm"></Range>
 
         <Button class="w-full my-5 { defaultButtonStyle }" on:click={startGame}>start game</Button>
+        <Button class="w-full { defaultButtonStyle }" on:click={reset}>reset</Button>
     </div>
 </div>
 
