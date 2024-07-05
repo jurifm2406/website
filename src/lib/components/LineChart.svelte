@@ -29,8 +29,10 @@ $: yScale = scaleLinear()
     ])
     .range([chartHeight - paddings.bottom, paddings.top])
     .nice();
+
+const tickCount = chartWidth / 75;
 $: yGrid = yScale.ticks(10);
-$: xGrid = xScale.ticks(10);
+$: xGrid = xScale.ticks(tickCount);
 $: colorScale = scaleOrdinal().domain(yVars).range(selectColor(yVars.length));
 
 dark.subscribe((value) => {
