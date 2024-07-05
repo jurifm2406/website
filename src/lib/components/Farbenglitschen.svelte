@@ -1,7 +1,9 @@
 <script lang="ts">
 import { defaultButtonStyle } from "$lib/styles";
 import * as d3 from "d3";
-import { Button, Label, Range } from "flowbite-svelte";
+import { Button, Label, Popover, Range } from "flowbite-svelte";
+import { QuestionCircleOutline } from "flowbite-svelte-icons";
+import LineChart from "./LineChart.svelte";
 
 let players = 2;
 let spades = 13;
@@ -10,7 +12,14 @@ let hearts = 13;
 let diamonds = 13;
 let jokers = 4;
 
-let history: { person: string; turn: number; cards: number }[] = [];
+let displayGraph = false;
+let container: HTMLDivElement;
+let width: number;
+let height: number;
+let yVars: string[] = [];
+let reload = {};
+
+let history: Record<string, number>[] = [];
 
 function fisherYatesShuffle(array: string[]): string[] {
     let currentIndex = array.length;
@@ -44,6 +53,8 @@ function createDeck(counts: number[]) {
 }
 
 function startGame() {
+    yVars = [];
+    displayGraph = false;
     history = [];
     let stack: string[] = [];
     const deck: string[] = createDeck([
@@ -58,12 +69,9 @@ function startGame() {
 
     let turn = 0;
     while (true) {
+        let turnData: Record<string, number> = {};
+        turnData.turn = turn;
         for (let i = 0; i < playerDecks.length; i++) {
-            history.push({
-                person: `Person ${i + 1}`,
-                turn: turn,
-                cards: playerDecks[i].length,
-            });
             const card = playerDecks[i].pop();
             if (card !== undefined) {
                 stack.push(card);
@@ -81,130 +89,58 @@ function startGame() {
                     nonZeroCount++;
                 }
             }
+            const PLAYER = `player${i + 1}`;
+            turnData[PLAYER] = playerDecks[i].length;
             if (nonZeroCount < 2) {
+                console.log(history);
                 createGraph();
                 return;
             }
-            turn++;
         }
+        history.push(turnData);
+        turn++;
     }
 }
 
 function createGraph() {
-    const data = structuredClone(history);
-    d3.select("#graph").html("");
-    // Specify the chart’s dimensions.
-    const width = 928;
-    const height = 600;
-    const marginTop = 20;
-    const marginRight = 20;
-    const marginBottom = 30;
-    const marginLeft = 30;
+    let vars = [];
 
-    // Create the positional scales.
-    const x = d3
-        .scaleLinear()
-        .domain(d3.extent(data, (d) => d.turn))
-        .range([marginLeft, width - marginRight]);
-
-    const y = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, (d) => d.cards)])
-        .nice()
-        .range([height - marginBottom, marginTop]);
-
-    // Create the SVG container.
-    const svg = d3
-        .create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", [0, 0, width, height])
-        .attr(
-            "style",
-            "max-width: 100%; height: auto; overflow: visible; font: 10px sans-serif;",
-        );
-
-    // Add the horizontal axis.
-    svg.append("g")
-        .attr("transform", `translate(0,${height - marginBottom})`)
-        .call(
-            d3
-                .axisBottom(x)
-                .ticks(width / 80)
-                .tickSizeOuter(0),
-        );
-
-    // Add the vertical axis.
-    svg.append("g")
-        .attr("transform", `translate(${marginLeft},0)`)
-        .call(d3.axisLeft(y))
-        .call((g) => g.select(".domain").remove())
-        .call((g) =>
-            g
-                .selectAll(".tick line")
-                .clone()
-                .attr("x2", width - marginLeft - marginRight)
-                .attr("stroke-opacity", 0.1),
-        )
-        .call((g) =>
-            g
-                .append("text")
-                .attr("x", -marginLeft)
-                .attr("y", 10)
-                .attr("fill", "currentColor")
-                .attr("text-anchor", "start")
-                .text("cards"),
-        );
-
-    // Compute the points in pixel space as [x, y, z], where z is the name of the series.
-    const points = data.map((d) => [x(d.turn), y(d.cards), d.person]);
-
-    // Group the points by series.
-    const groups = d3.rollup(
-        points,
-        (v) => Object.assign(v, { z: v[0][2] }),
-        (d) => d[2],
-    );
-
-    let color: string;
-
-    if (localStorage.getItem("color-theme") === "dark") {
-        color = "#FFF";
-    } else {
-        color = "#000";
+    for (let i = 0; i < players; i++) {
+        vars.push(`player${i + 1}`);
     }
 
-    // Draw the lines.
-    const line = d3.line();
+    yVars = vars;
 
-    svg.append("g")
-        .attr("fill", "none")
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .selectAll("path")
-        .data(groups.values())
-        .join("path")
-        .style("mix-blend-mode", "multiply")
-        .attr("d", line);
+    const box = d3.select(container).node()?.getBoundingClientRect();
 
-    d3.select("#graph").append(() => svg.node());
+    width = Math.round(box?.width || 928);
+    height = Math.round(box?.height || 600);
+
+    displayGraph = true;
+    reload = {};
 }
 
 function reset() {
+    yVars = [];
     players = 2;
     spades = 13;
     clubs = 13;
     hearts = 13;
     diamonds = 13;
     jokers = 4;
-
-    d3.select("#graph").html("");
+    displayGraph = false;
 }
 </script>
+
 <div class="grid w-full h-full" style="grid-template-columns: 2fr 1fr">
-    <div id="graph"></div>
+    <div class="w-full h-full" bind:this={container}>
+        {#key reload}
+            {#if displayGraph}
+                <LineChart chartHeight={height} chartWidth={width} data={history} xVar="turn" yVars={yVars} />
+            {/if}   
+        {/key}
+        
+    </div>
     <div id="sidebar">
         <Label class="float-left">players</Label><p class="float-right">{players}</p>
         <Range bind:value={players} max="64" min="2" size="sm"></Range>
@@ -221,6 +157,8 @@ function reset() {
 
         <Button class="w-full my-5 { defaultButtonStyle }" on:click={startGame}>start game</Button>
         <Button class="w-full { defaultButtonStyle }" on:click={reset}>reset</Button>
+        <Button id="what" class="float-end !p-2 !mt-4 bg-black border border-black text-white hover:text-black dark:bg-white dark:border dark:border-white dark:text-black dark:hover:text-white dark:hover:bg-black" pill={true}><QuestionCircleOutline size="sm" /></Button>
+        <Popover class="[&_div]:bg-white [&_div]:border-black w-96 text-sm font-light py-2 px-3 bg-white shadow text-black dark:bg-black dark:border dark:text-white dark:[&_div]:bg-black" title="what's this?" triggeredBy="#what" placement="bottom-start">farbenglitschen is an incredibly boring game where players just put cards in the middle one after another and the first one to put a card with the same suit as the first card down gets the entire stack, until there is only one player with all the cards. turns out, you can do some pretty interesting statistics with that.</Popover>
     </div>
 </div>
 
