@@ -1,125 +1,128 @@
 <script lang="ts">
-export let nodes: {
-    id: string;
-    group: number;
-}[];
-export let links: {
-    source: string;
-    target: string;
-    value: number;
-}[];
-export let color: string;
+    export let rawNodes: {
+        id: string;
+        group: number;
+    }[];
+    export let rawLinks: {
+        source: string;
+        target: string;
+        value: number;
+    }[];
+    export let color: string;
 
-import { onMount } from "svelte";
-import {
-    scaleLinear,
-    scaleOrdinal,
-    forceSimulation,
-    forceLink,
-    forceManyBody,
-    forceCenter,
-    zoom,
-    zoomIdentity,
-    drag,
-    select,
-    selectAll,
-    type Simulation,
-} from "d3";
-let d3 = {
-    zoom,
-    zoomIdentity,
-    scaleLinear,
-    scaleOrdinal,
-    select,
-    selectAll,
-    drag,
-    forceSimulation,
-    forceLink,
-    forceManyBody,
-    forceCenter,
-};
-let svg: SVGSVGElement;
-let width = 0;
-let height = 0;
-const nodeRadius = 6;
+    import { onMount } from "svelte";
+    import {
+        scaleLinear,
+        scaleOrdinal,
+        forceSimulation,
+        forceLink,
+        forceManyBody,
+        forceCenter,
+        zoom,
+        zoomIdentity,
+        drag,
+        select,
+        selectAll,
+        type Simulation,
+    } from "d3";
+    let d3 = {
+        zoom,
+        zoomIdentity,
+        scaleLinear,
+        scaleOrdinal,
+        select,
+        selectAll,
+        drag,
+        forceSimulation,
+        forceLink,
+        forceManyBody,
+        forceCenter,
+    };
+    let svg: SVGSVGElement;
+    let width = 0;
+    let height = 0;
+    const nodeRadius = 6;
 
-let transform = d3.zoomIdentity;
-let simulation: Simulation<any, any>;
-onMount(() => {
-    const rect = d3.select(svg).node()?.getBoundingClientRect();
+    let links = rawLinks.map((d) => Object.create(d));
+    let nodes = rawNodes.map((d) => Object.create(d));
 
-    ({ width, height } = rect ? rect : { width: 500, height: 500 });
+    let transform = d3.zoomIdentity;
+    let simulation: Simulation<any, any>;
+    onMount(() => {
+        const rect = d3.select(svg).node()?.getBoundingClientRect();
 
-    simulation = d3
-        .forceSimulation(nodes)
-        .force(
-            "link",
-            d3
-                .forceLink(links)
-                .distance(100)
-                .id((d) => d.id),
-        )
-        .force("charge", d3.forceManyBody().strength(-100))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .on("tick", simulationUpdate);
+        ({ width, height } = rect ? rect : { width: 500, height: 500 });
 
-    d3.select(svg)
-        .call(
-            d3
-                .drag()
-                .container(svg)
-                .subject(dragsubject)
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended),
-        )
-        .call(d3.zoom().on("zoom", zoomed));
-});
+        simulation = d3
+            .forceSimulation(nodes)
+            .force(
+                "link",
+                d3
+                    .forceLink(links)
+                    .distance(100)
+                    .id((d) => d.id),
+            )
+            .force("charge", d3.forceManyBody().strength(-100))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", simulationUpdate);
 
-function simulationUpdate() {
-    simulation.tick();
-    nodes = [...nodes];
-    links = [...links];
-}
+        d3.select(svg)
+            .call(
+                d3
+                    .drag()
+                    .container(svg)
+                    .subject(dragsubject)
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended),
+            )
+            .call(d3.zoom().on("zoom", zoomed));
+    });
 
-function zoomed(currentEvent) {
-    transform = currentEvent.transform;
-    simulationUpdate();
-}
-
-function dragsubject(currentEvent) {
-    const node = simulation.find(
-        transform.invertX(currentEvent.x),
-        transform.invertY(currentEvent.y),
-        nodeRadius,
-    );
-    if (node) {
-        node.x = transform.applyX(node.x);
-        node.y = transform.applyY(node.y);
+    function simulationUpdate() {
+        simulation.tick();
+        nodes = [...nodes];
+        links = [...links];
     }
-    return node;
-}
 
-function dragstarted(currentEvent) {
-    if (!currentEvent.active) simulation.alphaTarget(0.3).restart();
-    currentEvent.subject.fx = transform.invertX(currentEvent.subject.x);
-    currentEvent.subject.fy = transform.invertY(currentEvent.subject.y);
-}
+    function zoomed(currentEvent) {
+        transform = currentEvent.transform;
+        simulationUpdate();
+    }
 
-function dragged(currentEvent) {
-    currentEvent.subject.fx = transform.invertX(currentEvent.x);
-    currentEvent.subject.fy = transform.invertY(currentEvent.y);
-}
+    function dragsubject(currentEvent) {
+        const node = simulation.find(
+            transform.invertX(currentEvent.x),
+            transform.invertY(currentEvent.y),
+            nodeRadius,
+        );
+        if (node) {
+            node.x = transform.applyX(node.x);
+            node.y = transform.applyY(node.y);
+        }
+        return node;
+    }
 
-function dragended(currentEvent) {
-    if (!currentEvent.active) simulation.alphaTarget(0);
-    currentEvent.subject.fx = null;
-    currentEvent.subject.fy = null;
-}
+    function dragstarted(currentEvent) {
+        if (!currentEvent.active) simulation.alphaTarget(0.3).restart();
+        currentEvent.subject.fx = transform.invertX(currentEvent.subject.x);
+        currentEvent.subject.fy = transform.invertY(currentEvent.subject.y);
+    }
 
-function resize() {
-    ({ width, height } = svg.getBoundingClientRect());
-}
+    function dragged(currentEvent) {
+        currentEvent.subject.fx = transform.invertX(currentEvent.x);
+        currentEvent.subject.fy = transform.invertY(currentEvent.y);
+    }
+
+    function dragended(currentEvent) {
+        if (!currentEvent.active) simulation.alphaTarget(0);
+        currentEvent.subject.fx = null;
+        currentEvent.subject.fy = null;
+    }
+
+    function resize() {
+        ({ width, height } = svg.getBoundingClientRect());
+    }
 </script>
 
 <svelte:window on:resize={resize} />

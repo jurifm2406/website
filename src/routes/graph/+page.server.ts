@@ -2,6 +2,12 @@ import { prisma } from "$lib/server/prisma";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
+    return {
+        graph: fetchData(),
+    };
+};
+
+async function fetchData() {
     const persons = await prisma.person.findMany();
     const relations = await prisma.relation.findMany({
         include: {
@@ -9,6 +15,7 @@ export const load: PageServerLoad = async () => {
             person2: true,
         },
     });
+
     const nodes = persons.map((person) => {
         return {
             id: person.name,
@@ -25,7 +32,7 @@ export const load: PageServerLoad = async () => {
     });
 
     return {
-        nodes: nodes,
-        links: links,
+        links,
+        nodes,
     };
-};
+}
