@@ -91,9 +91,9 @@
                 <Helper color="red">Specify a person!</Helper>
             {/if}
 
-            <Button class={defaultButtonStyle} type="submit"
-                >remove person</Button
-            >
+            <Button class={defaultButtonStyle} type="submit">
+                remove person
+            </Button>
         </form>
     </div>
     <div
@@ -159,9 +159,9 @@
                 <Helper color="red">Specify both persons!</Helper>
             {/if}
 
-            <Button class={defaultButtonStyle} type="submit"
-                >add relation</Button
-            >
+            <Button class={defaultButtonStyle} type="submit">
+                add relation
+            </Button>
         </form>
     </div>
     <div
@@ -195,9 +195,9 @@
             </Label>
 
             {#if form?.editPersonIncomplete}
-                <Helper color="red"
-                    >you need to specify a person and name</Helper
-                >
+                <Helper color="red">
+                    you need to specify a person and name
+                </Helper>
             {/if}
 
             <Button class={defaultButtonStyle} type="submit">rename</Button>
@@ -223,9 +223,9 @@
                 />
             </Label>
 
-            <Button class={defaultButtonStyle} type="submit"
-                >remove Relation</Button
-            >
+            <Button class={defaultButtonStyle} type="submit">
+                remove Relation
+            </Button>
         </form>
     </div>
 </div>

@@ -52,8 +52,10 @@
         <NavBrand href="/">
             <span
                 class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-                id="subject">franz münzner</span
+                id="subject"
             >
+                franz münzner
+            </span>
         </NavBrand>
         <NavHamburger />
         <NavUl
@@ -62,22 +64,30 @@
             <NavLi
                 active={true}
                 class="text-black md:hover:text-black hover:text-black dark:text-white"
-                href="/">home</NavLi
+                href="/"
             >
+                home
+            </NavLi>
             {#if data.user !== null}
                 <NavLi
                     class="text-black md:hover:text-black hover:text-black dark:text-white"
-                    href="/graph">graph</NavLi
+                    href="/graph"
                 >
+                    graph
+                </NavLi>
                 <NavLi
                     class="text-black md:hover:text-black dark:text-white hover:text-black"
-                    href="/cards">cards</NavLi
+                    href="/cards"
                 >
+                    cards
+                </NavLi>
                 {#if data.user.admin}
                     <NavLi
                         class="text-black md:hover:text-black hover:text-black dark:text-white"
-                        href="/admin/graph">admin graph</NavLi
+                        href="/admin/graph"
                     >
+                        admin graph
+                    </NavLi>
                 {/if}
                 <NavLi
                     class="text-black md:hover:text-black hover:text-black dark:text-white"
@@ -98,18 +108,23 @@
                         <DropdownItem>
                             <span
                                 class="block text-sm font-bold text-black dark:text-white"
-                                >{data.user.username}</span
                             >
+                                {data.user.username}
+                            </span>
                         </DropdownItem>
                         <DropdownItem
                             class="text-black dark:text-white"
-                            href="/settings">settings</DropdownItem
+                            href="/settings"
                         >
+                            settings
+                        </DropdownItem>
                         <DropdownDivider />
                         <DropdownItem
                             class="text-black dark:text-white"
-                            on:click={logout}>log out</DropdownItem
+                            on:click={logout}
                         >
+                            log out
+                        </DropdownItem>
                     </Dropdown>
                 </NavLi>
             {:else}
@@ -127,13 +142,16 @@
                         <DropdownHeader>
                             <span
                                 class="block text-sm font-bold text-black dark:text-white"
-                                >not logged in</span
                             >
+                                not logged in
+                            </span>
                         </DropdownHeader>
                         <DropdownItem
                             class="text-black dark:text-white"
-                            href="/login">log in</DropdownItem
+                            href="/login"
                         >
+                            log in
+                        </DropdownItem>
                     </Dropdown>
                 </NavLi>
             {/if}

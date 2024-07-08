@@ -59,9 +59,9 @@
                 {#if form?.passwordMismatch}
                     <Helper color="red">passwords do not match</Helper>
                 {/if}
-                <Button class="w-full {defaultButtonStyle}" type="submit"
-                    >register</Button
-                >
+                <Button class="w-full {defaultButtonStyle}" type="submit">
+                    register
+                </Button>
                 {#if form?.userDuplicate}
                     <Helper color="red">user already exists</Helper>
                 {/if}
@@ -71,8 +71,10 @@
                 <div class="text-sm text-black dark:text-white">
                     already have an account? <a
                         class="font-semibold hover:underline text-black dark:text-white"
-                        href="/login">login here</a
+                        href="/login"
                     >
+                        login here
+                    </a>
                 </div>
             </form>
         </div>

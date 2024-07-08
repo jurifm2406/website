@@ -44,8 +44,10 @@
                 <p class="text-sm font-light text-black dark:text-white">
                     don’t have an account yet? <a
                         class="font-medium text-black hover:underline dark:text-white"
-                        href="/register">register here</a
+                        href="/register"
                     >
+                        register here
+                    </a>
                 </p>
             </form>
         </div>

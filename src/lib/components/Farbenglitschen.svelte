@@ -172,27 +172,30 @@
         <p class="float-right">{jokers}</p>
         <Range bind:value={jokers} max="64" min="0" size="sm"></Range>
 
-        <Button class="w-full my-5 {defaultButtonStyle}" on:click={startGame}
-            >start game</Button
-        >
-        <Button class="w-full {defaultButtonStyle}" on:click={reset}
-            >reset</Button
-        >
+        <Button class="w-full my-5 {defaultButtonStyle}" on:click={startGame}>
+            start game
+        </Button>
+        <Button class="w-full {defaultButtonStyle}" on:click={reset}>
+            reset
+        </Button>
         <Button
             id="what"
             class="float-end !p-2 !mt-4 bg-black border border-black text-white hover:text-black dark:bg-white dark:border dark:border-white dark:text-black dark:hover:text-white dark:hover:bg-black"
-            pill={true}><QuestionCircleOutline size="sm" /></Button
+            pill={true}
         >
+            <QuestionCircleOutline size="sm" />
+        </Button>
         <Popover
             class="[&_div]:bg-white [&_div]:border-black w-96 text-sm font-light py-2 px-3 bg-white shadow text-black dark:bg-black dark:border dark:text-white dark:[&_div]:bg-black"
             title="what's this?"
             triggeredBy="#what"
             placement="bottom-start"
-            >farbenglitschen is an incredibly boring game where players just put
+        >
+            farbenglitschen is an incredibly boring game where players just put
             cards in the middle one after another and the first one to put a
             card with the same suit as the first card down gets the entire
             stack, until there is only one player with all the cards. turns out,
-            you can do some pretty interesting statistics with that.</Popover
-        >
+            you can do some pretty interesting statistics with that.
+        </Popover>
     </div>
 </div>

@@ -70,14 +70,16 @@
                     value={data.user?.name}
                 />
             </div>
-            <Button class="sm:col-span-2 {defaultButtonStyle}" type="submit"
-                >apply</Button
-            >
+            <Button class="sm:col-span-2 {defaultButtonStyle}" type="submit">
+                apply
+            </Button>
             <Button
                 class="sm:col-span-2 {alertButtonStyle}"
                 on:click={() => (popupModal = true)}
-                type="button">delete account</Button
+                type="button"
             >
+                delete account
+            </Button>
             <Modal
                 bind:open={popupModal}
                 class="bg-white shadow-lg dark:bg-black dark:border dark:shadow-none"
@@ -95,12 +97,16 @@
                     <Button
                         class="me-2 {alertButtonStyle}"
                         formaction="?/delete"
-                        type="submit">yes, i'm sure</Button
+                        type="submit"
                     >
+                        yes, i'm sure
+                    </Button>
                     <Button
                         class={defaultButtonStyle}
-                        on:click={() => (popupModal = false)}>no, cancel</Button
+                        on:click={() => (popupModal = false)}
                     >
+                        no, cancel
+                    </Button>
                 </div>
             </Modal>
         </div>
