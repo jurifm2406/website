@@ -7,7 +7,11 @@
         "build": "vite build",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "**/*": "prettier --write --ignore-unknown"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.8.3",
@@ -24,6 +28,8 @@
         "flowbite-svelte-blocks": "^1.1.3",
         "flowbite-svelte-icons": "^1.6.1",
         "flowbite-typography": "^1.0.3",
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.7",
         "lucia": "^3.2.0",
         "postcss": "^8.4.39",
         "prettier": "^3.3.2",
