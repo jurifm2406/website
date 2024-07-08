@@ -1,8 +1,7 @@
 <script>
-import Farbenglitschen from "$lib/components/Farbenglitschen.svelte";
-import { TabItem, Tabs } from "flowbite-svelte";
+    import Farbenglitschen from "$lib/components/Farbenglitschen.svelte";
+    import { TabItem, Tabs } from "flowbite-svelte";
 </script>
-
 
 <Tabs
     activeClasses="p-4 text-black border-b-2 font-bold dark:font-bold border-black dark:text-white dark:border-white"

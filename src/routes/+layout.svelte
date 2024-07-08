@@ -1,48 +1,48 @@
 <script lang="ts">
-import "../app.css";
-import { goto } from "$app/navigation";
-import {
-    DarkMode,
-    Avatar as DefaultAvatar,
-    Dropdown,
-    DropdownDivider,
-    DropdownHeader,
-    DropdownItem,
-    NavBrand,
-    NavHamburger,
-    NavLi,
-    NavUl,
-    Navbar,
-} from "flowbite-svelte";
-import Avatar from "svelte-boring-avatars";
-import type { LayoutData } from "./$types";
-import { dark } from "$lib/stores";
-import { onMount } from "svelte";
+    import "../app.css";
+    import { goto } from "$app/navigation";
+    import {
+        DarkMode,
+        Avatar as DefaultAvatar,
+        Dropdown,
+        DropdownDivider,
+        DropdownHeader,
+        DropdownItem,
+        NavBrand,
+        NavHamburger,
+        NavLi,
+        NavUl,
+        Navbar,
+    } from "flowbite-svelte";
+    import Avatar from "svelte-boring-avatars";
+    import type { LayoutData } from "./$types";
+    import { dark } from "$lib/stores";
+    import { onMount } from "svelte";
 
-async function logout() {
-    const response = await fetch("/logout", {
-        method: "POST",
-        body: "",
-        headers: {
-            "content-type": "application/json",
-        },
-    });
-
-    if (response.ok) {
-        await goto("/", {
-            replaceState: true,
-            invalidateAll: true,
+    async function logout() {
+        const response = await fetch("/logout", {
+            method: "POST",
+            body: "",
+            headers: {
+                "content-type": "application/json",
+            },
         });
+
+        if (response.ok) {
+            await goto("/", {
+                replaceState: true,
+                invalidateAll: true,
+            });
+        }
     }
-}
 
-let dropdownOpen = false;
+    let dropdownOpen = false;
 
-export let data: LayoutData;
+    export let data: LayoutData;
 
-onMount(() => {
-    dark.set(localStorage.getItem("color-theme") === "dark");
-});
+    onMount(() => {
+        dark.set(localStorage.getItem("color-theme") === "dark");
+    });
 </script>
 
 <div class="relative px-8 h-screen">

@@ -1,70 +1,70 @@
 <script lang="ts">
-import { enhance } from "$app/forms";
-import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
-import type { Person, Relation } from "$lib/types";
-import {
-    Button,
-    Helper,
-    Input,
-    Label,
-    Select,
-    type SelectOptionType,
-} from "flowbite-svelte";
-import type { ActionData } from "./$types";
+    import { enhance } from "$app/forms";
+    import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
+    import type { Person, Relation } from "$lib/types";
+    import {
+        Button,
+        Helper,
+        Input,
+        Label,
+        Select,
+        type SelectOptionType,
+    } from "flowbite-svelte";
+    import type { ActionData } from "./$types";
 
-export let data: {
-    relations: Relation[];
-    persons: Person[];
-};
+    export let data: {
+        relations: Relation[];
+        persons: Person[];
+    };
 
-export let form: ActionData;
+    export let form: ActionData;
 
-$: relationOptions = data.relations
-    .map((relation) => {
-        return {
-            value: relation.id,
-            name: `${relation.person1.name} ↔ ${relation.person2.name}`,
-        };
-    })
-    .sort();
-
-$: personOptions = data.persons
-    .map((person) => {
-        return {
-            value: person.id,
-            name: person.name,
-        };
-    })
-    .sort();
-
-let person2Options: SelectOptionType<number>[] = [];
-
-let removePersonSelected: number;
-let editPersonSelected: number;
-let removeRelationSelected: number;
-let addRelationPerson1Selected: number;
-let addRelationPerson2Selected: number;
-
-$: if (addRelationPerson1Selected) {
-    person2Options = personOptions
-        .filter((person2) => {
-            for (const relation of data.relations) {
-                if (
-                    (relation.person1.id === addRelationPerson1Selected &&
-                        relation.person2.id === person2.value) ||
-                    (relation.person1.id === person2.value &&
-                        relation.person2.id === addRelationPerson1Selected)
-                ) {
-                    return false;
-                }
-                if (person2.value === addRelationPerson1Selected) {
-                    return false;
-                }
-            }
-            return true;
+    $: relationOptions = data.relations
+        .map((relation) => {
+            return {
+                value: relation.id,
+                name: `${relation.person1.name} ↔ ${relation.person2.name}`,
+            };
         })
         .sort();
-}
+
+    $: personOptions = data.persons
+        .map((person) => {
+            return {
+                value: person.id,
+                name: person.name,
+            };
+        })
+        .sort();
+
+    let person2Options: SelectOptionType<number>[] = [];
+
+    let removePersonSelected: number;
+    let editPersonSelected: number;
+    let removeRelationSelected: number;
+    let addRelationPerson1Selected: number;
+    let addRelationPerson2Selected: number;
+
+    $: if (addRelationPerson1Selected) {
+        person2Options = personOptions
+            .filter((person2) => {
+                for (const relation of data.relations) {
+                    if (
+                        (relation.person1.id === addRelationPerson1Selected &&
+                            relation.person2.id === person2.value) ||
+                        (relation.person1.id === person2.value &&
+                            relation.person2.id === addRelationPerson1Selected)
+                    ) {
+                        return false;
+                    }
+                    if (person2.value === addRelationPerson1Selected) {
+                        return false;
+                    }
+                }
+                return true;
+            })
+            .sort();
+    }
 </script>
 
 <div class="grid grid-cols-2 grid-rows-3 gap-5 mx-auto" style="width: 70%;">
@@ -80,13 +80,20 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 select a person
-                <Select bind:value={removePersonSelected} class={ defaultInputStyle } items={personOptions} name="person" />
+                <Select
+                    bind:value={removePersonSelected}
+                    class={defaultInputStyle}
+                    items={personOptions}
+                    name="person"
+                />
             </Label>
-            { #if form?.removePersonIncomplete }
+            {#if form?.removePersonIncomplete}
                 <Helper color="red">Specify a person!</Helper>
-            { /if }
-            
-            <Button class={ defaultButtonStyle } type="submit">remove person</Button>
+            {/if}
+
+            <Button class={defaultButtonStyle} type="submit"
+                >remove person</Button
+            >
         </form>
     </div>
     <div
@@ -101,10 +108,15 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 type name
-                <Input class={ defaultInputStyle } id="person" name="person" type="text" />
+                <Input
+                    class={defaultInputStyle}
+                    id="person"
+                    name="person"
+                    type="text"
+                />
             </Label>
 
-            <Button class={ defaultButtonStyle } type="submit">add person</Button>
+            <Button class={defaultButtonStyle} type="submit">add person</Button>
             {#if form?.addPersonIncomplete}
                 <Helper color="red">Specify a person!</Helper>
             {/if}
@@ -125,19 +137,31 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 select person 1
-                <Select bind:value={addRelationPerson1Selected} class={ defaultInputStyle } items={personOptions} name="person1" />
+                <Select
+                    bind:value={addRelationPerson1Selected}
+                    class={defaultInputStyle}
+                    items={personOptions}
+                    name="person1"
+                />
             </Label>
 
             <Label class="text-black dark:text-white">
                 select person 2
-                <Select bind:value={addRelationPerson2Selected} class={ defaultInputStyle } items={person2Options} name="person2"></Select>
+                <Select
+                    bind:value={addRelationPerson2Selected}
+                    class={defaultInputStyle}
+                    items={person2Options}
+                    name="person2"
+                ></Select>
             </Label>
 
-            { #if form?.addRelationIncomplete }
+            {#if form?.addRelationIncomplete}
                 <Helper color="red">Specify both persons!</Helper>
-            { /if }
+            {/if}
 
-            <Button class={ defaultButtonStyle } type="submit">add relation</Button>
+            <Button class={defaultButtonStyle} type="submit"
+                >add relation</Button
+            >
         </form>
     </div>
     <div
@@ -150,27 +174,34 @@ $: if (addRelationPerson1Selected) {
             method="post"
             use:enhance
         >
-
             <Label class="text-black dark:text-white">
                 select person
-                <Select bind:value={editPersonSelected} class={ defaultInputStyle } items={personOptions} name="person" />
+                <Select
+                    bind:value={editPersonSelected}
+                    class={defaultInputStyle}
+                    items={personOptions}
+                    name="person"
+                />
             </Label>
 
             <Label class="text-black dark:text-white">
                 type new name
-                <Input class={ defaultInputStyle } id="name" name="name" type="text" />
+                <Input
+                    class={defaultInputStyle}
+                    id="name"
+                    name="name"
+                    type="text"
+                />
             </Label>
 
-            { #if form?.editPersonIncomplete }
-                <Helper color="red">
-                    you need to specify a person and name
-                </Helper>
-            { /if }
+            {#if form?.editPersonIncomplete}
+                <Helper color="red"
+                    >you need to specify a person and name</Helper
+                >
+            {/if}
 
-            
-            <Button class={ defaultButtonStyle } type="submit">rename</Button>
+            <Button class={defaultButtonStyle} type="submit">rename</Button>
         </form>
-
     </div>
     <div
         class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
@@ -184,10 +215,17 @@ $: if (addRelationPerson1Selected) {
         >
             <Label class="text-black dark:text-white">
                 choose relation
-                <Select bind:value={removeRelationSelected} class={ defaultInputStyle } items={relationOptions} name="relation"/>
+                <Select
+                    bind:value={removeRelationSelected}
+                    class={defaultInputStyle}
+                    items={relationOptions}
+                    name="relation"
+                />
             </Label>
-            
-            <Button class={ defaultButtonStyle } type="submit">remove Relation</Button>
+
+            <Button class={defaultButtonStyle} type="submit"
+                >remove Relation</Button
+            >
         </form>
     </div>
 </div>
