@@ -16,7 +16,7 @@ model User {
   username      String    @unique
   name          String?
   password_hash String
-  admin         Boolean   @default(false)
+  role          Role      @default(USER)
   avatar        Avatar?
 }
 
@@ -54,4 +54,9 @@ model Relation {
   person2   Person @relation("PersonRelation2", fields: [person2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("relations")
+}
+
+enum Role {
+  USER
+  ADMIN
 }

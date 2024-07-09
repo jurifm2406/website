@@ -1,5 +1,6 @@
 import { dev } from "$app/environment";
 import { prisma } from "$lib/server/prisma";
+import type { Role } from "$lib/types";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia } from "lucia";
 
@@ -17,7 +18,7 @@ export const lucia = new Lucia(adapter, {
             id: attributes.id,
             username: attributes.username,
             name: attributes.name,
-            admin: attributes.admin,
+            role: attributes.role,
             avatar: attributes.avatar,
         };
     },
@@ -34,7 +35,7 @@ interface DatabaseUserAttributes {
     id: string;
     username: string;
     name?: string;
-    admin: boolean;
+    role: Role;
     avatar: {
         variant: string;
         hex: string[];
