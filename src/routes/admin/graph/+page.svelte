@@ -97,7 +97,7 @@
     >
         <form
             action="?/removePerson"
-            class="flex flex-col space-y-4"
+            class="flex flex-col space-y-4 w-3/4"
             method="post"
             use:enhance
         >
@@ -125,7 +125,7 @@
     >
         <form
             action="?/addPerson"
-            class="flex flex-col space-y-4"
+            class="flex flex-col space-y-4 w-3/4"
             method="post"
             use:enhance
         >
@@ -154,7 +154,7 @@
     >
         <form
             action="?/addRelation"
-            class="flex flex-col space-y-4"
+            class="flex flex-col space-y-4 w-3/4"
             method="post"
             use:enhance
         >
@@ -193,7 +193,7 @@
     >
         <form
             action="?/editPerson"
-            class="flex flex-col space-y-4"
+            class="flex flex-col space-y-4 w-3/4"
             method="post"
             use:enhance
         >
