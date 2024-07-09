@@ -19,16 +19,7 @@
 
     export let form: ActionData;
 
-    $: relationOptions = data.relations
-        .map((relation) => {
-            return {
-                value: relation.id,
-                name: `${relation.person1.name} ↔ ${relation.person2.name}`,
-            };
-        })
-        .sort();
-
-    $: personOptions = data.persons
+    const personOptions = data.persons
         .map((person) => {
             return {
                 value: person.id,
@@ -37,31 +28,63 @@
         })
         .sort();
 
-    let person2Options: SelectOptionType<number>[] = [];
+    let addRelationOptions: SelectOptionType<number>[] = [];
+    let removeRelationOptions: SelectOptionType<number>[] = [];
 
     let removePersonSelected: number;
     let editPersonSelected: number;
-    let removeRelationSelected: number;
+    let removeRelationPerson1Selected: number;
+    let removeRelationPerson2Selected: number;
     let addRelationPerson1Selected: number;
     let addRelationPerson2Selected: number;
 
     $: if (addRelationPerson1Selected) {
-        person2Options = personOptions
+        addRelationOptions = filterOptions(
+            personOptions,
+            addRelationPerson1Selected,
+            "exclude",
+        );
+    }
+
+    $: if (removeRelationPerson1Selected) {
+        removeRelationOptions = filterOptions(
+            personOptions,
+            removeRelationPerson1Selected,
+            "match",
+        );
+    }
+
+    function filterOptions(
+        options: { value: number; name: string }[],
+        compare: number,
+        mode: "match" | "exclude",
+    ) {
+        return options
             .filter((person2) => {
                 for (const relation of data.relations) {
                     if (
-                        (relation.person1.id === addRelationPerson1Selected &&
+                        (relation.person1.id === compare &&
                             relation.person2.id === person2.value) ||
                         (relation.person1.id === person2.value &&
-                            relation.person2.id === addRelationPerson1Selected)
+                            relation.person2.id === compare)
                     ) {
-                        return false;
+                        if (mode === "exclude") {
+                            return false;
+                        }
+                        if (mode === "match") {
+                            return true;
+                        }
                     }
-                    if (person2.value === addRelationPerson1Selected) {
+                    if (person2.value === compare) {
                         return false;
                     }
                 }
-                return true;
+                if (mode === "exclude") {
+                    return true;
+                }
+                if (mode === "match") {
+                    return false;
+                }
             })
             .sort();
     }
@@ -150,7 +173,7 @@
                 <Select
                     bind:value={addRelationPerson2Selected}
                     class={defaultInputStyle}
-                    items={person2Options}
+                    items={addRelationOptions}
                     name="person2"
                 ></Select>
             </Label>
@@ -209,20 +232,30 @@
     >
         <form
             action="?/removeRelation"
-            class="flex flex-col space-y-4"
+            class="flex flex-col space-y-4 w-3/4"
             method="post"
             use:enhance
         >
-            <Label class="text-black dark:text-white">
-                choose relation
-                <Select
-                    bind:value={removeRelationSelected}
-                    class={defaultInputStyle}
-                    items={relationOptions}
-                    name="relation"
-                />
-            </Label>
-
+            <div class="flex flex-row w-full space-x-8">
+                <Label class="text-black dark:text-white w-full">
+                    choose person 1
+                    <Select
+                        bind:value={removeRelationPerson1Selected}
+                        class={defaultInputStyle}
+                        items={personOptions}
+                        name="relation"
+                    />
+                </Label>
+                <Label class="text-black dark:text-white w-full">
+                    choose person 2
+                    <Select
+                        bind:value={removeRelationPerson2Selected}
+                        class={defaultInputStyle}
+                        items={removeRelationOptions}
+                        name="relation"
+                    />
+                </Label>
+            </div>
             <Button class={defaultButtonStyle} type="submit">
                 remove Relation
             </Button>
