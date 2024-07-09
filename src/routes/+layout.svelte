@@ -114,7 +114,7 @@
                         </DropdownItem>
                         <DropdownItem
                             class="text-black dark:text-white"
-                            href="/settings"
+                            href="/profile/settings"
                         >
                             settings
                         </DropdownItem>
