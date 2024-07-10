@@ -81,14 +81,6 @@
                 >
                     cards
                 </NavLi>
-                {#if data.user.admin}
-                    <NavLi
-                        class="text-black md:hover:text-black hover:text-black dark:text-white"
-                        href="/admin/graph"
-                    >
-                        admin graph
-                    </NavLi>
-                {/if}
                 <NavLi
                     class="text-black md:hover:text-black hover:text-black dark:text-white"
                 >
@@ -107,20 +99,29 @@
                     >
                         <DropdownItem>
                             <span
-                                class="block text-sm font-bold text-black dark:text-white"
+                                class="block text-sm font-bold text-black dark:text-white text-center"
                             >
                                 {data.user.username}
                             </span>
                         </DropdownItem>
+                        <DropdownDivider />
+                        {#if data.user.role === "ADMIN"}
+                            <DropdownItem
+                                class="text-black dark:text-white text-center"
+                                href="/admin/graph"
+                            >
+                                admin dashboard
+                            </DropdownItem>
+                        {/if}
                         <DropdownItem
-                            class="text-black dark:text-white"
+                            class="text-black dark:text-white text-center"
                             href="/profile/settings"
                         >
                             settings
                         </DropdownItem>
                         <DropdownDivider />
                         <DropdownItem
-                            class="text-black dark:text-white"
+                            class="text-black dark:text-white text-center"
                             on:click={logout}
                         >
                             log out
