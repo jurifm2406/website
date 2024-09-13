@@ -5,4 +5,4 @@ export const alertButtonStyle: string =
     "bg-red-600 dark:bg-red-600 text-white dark:text-black border border-red-600 dark:border dark:hover:border dark:border-red-600 dark:hover:border-red-600 hover:text-red-600 hover:border-red-600 hover:bg-white dark:hover:text-red-600 dark:hover:bg-black";
 
 export const defaultInputStyle: string =
-    "focus:ring-black focus:ring-2 dark:focus:ring-1 dark:focus:ring-white bg-white dark:bg-black";
+    "focus:border-black focus:ring-0 dark:focus:ring-0 dark:focus:border-white bg-white dark:bg-black";

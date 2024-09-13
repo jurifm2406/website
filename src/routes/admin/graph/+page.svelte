@@ -99,6 +99,8 @@
         "flex items-center p-2 text-base font-normal text-white rounded-lg dark:text-black bg-black dark:bg-white border dark:border border-black dark:border-white hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white";
     let nonActiveClass =
         "flex items-center p-2 text-base font-normal text-black rounded-lg dark:text-white border border-white hover:border-black dark:border-black dark:hover:border-white dark:hover:border-white";
+    let divClass =
+        "flex justify-center items-center text-center rounded-lg shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black";
 </script>
 
 <div class="w-full mt-5">
@@ -111,10 +113,7 @@
         </SidebarWrapper>
     </Sidebar>
     <div class="grid grid-cols-2 grid-rows-3 gap-5 ml-64">
-        <div
-            class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
-            style="grid-area: 1 / 1 / 2 / 2;"
-        >
+        <div class={divClass} style="grid-area: 1 / 1 / 2 / 2;">
             <form
                 action="?/removePerson"
                 class="flex flex-col space-y-4 w-3/4"
@@ -139,10 +138,7 @@
                 </Button>
             </form>
         </div>
-        <div
-            class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
-            style="grid-area: 1 / 2 / 2 / 3;"
-        >
+        <div class={divClass} style="grid-area: 1 / 2 / 2 / 3;">
             <form
                 action="?/addPerson"
                 class="flex flex-col space-y-4 w-3/4"
@@ -248,10 +244,7 @@
                 <Button class={defaultButtonStyle} type="submit">rename</Button>
             </form>
         </div>
-        <div
-            class="flex justify-center items-center text-center rounded shadow-lg dark:border dark:border-gray-700 p-5 bg-white dark:bg-black"
-            style="grid-area: 3 / 1 / 4 / 3;"
-        >
+        <div class={divClass} style="grid-area: 3 / 1 / 4 / 3;">
             <form
                 action="?/removeRelation"
                 class="flex flex-col space-y-4 w-3/4"
