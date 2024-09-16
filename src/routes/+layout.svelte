@@ -3,7 +3,7 @@
     import { goto } from "$app/navigation";
     import {
         DarkMode,
-        Avatar as DefaultAvatar,
+        Avatar as PlaceholderAvatar,
         Dropdown,
         DropdownDivider,
         DropdownHeader,
@@ -131,9 +131,7 @@
             {:else}
                 <NavLi>
                     <div class="flex items-center md:order-2">
-                        <button on:click={() => (dropdownOpen = !dropdownOpen)}>
-                            <DefaultAvatar src="" />
-                        </button>
+                        <PlaceholderAvatar />
                     </div>
                     <Dropdown
                         bind:open={dropdownOpen}
@@ -152,6 +150,12 @@
                             href="/login"
                         >
                             log in
+                        </DropdownItem>
+                        <DropdownItem
+                            class="text-black dark:text-white"
+                            href="/register"
+                        >
+                            register
                         </DropdownItem>
                     </Dropdown>
                 </NavLi>
