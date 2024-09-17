@@ -1,4 +1,4 @@
-export const defaultButtonStyle: string =
+export const primaryButtonStyle: string =
     "bg-black text-white border border-black hover:bg-white hover:text-black hover:border hover:border-black dark:bg-white dark:text-black dark:border dark:border-white dark:hover:bg-black dark:hover:text-white dark:hover:border dark:hover:border-white";
 
 export const alertButtonStyle: string =

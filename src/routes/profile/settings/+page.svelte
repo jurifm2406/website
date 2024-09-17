@@ -1,14 +1,14 @@
 <script lang="ts">
     import {
         alertButtonStyle,
-        defaultButtonStyle,
+        primaryButtonStyle,
         defaultInputStyle,
     } from "$lib/styles.js";
     import { Button, Input, Label, Modal } from "flowbite-svelte";
     import { Section } from "flowbite-svelte-blocks";
     import { ExclamationCircleOutline } from "flowbite-svelte-icons";
     import ColorPicker from "svelte-awesome-color-picker";
-    import Avatar, { AvatarBeam } from "svelte-boring-avatars";
+    import Avatar from "svelte-boring-avatars";
     import type { PageData } from "./$types";
 
     export let data: PageData;
@@ -70,7 +70,7 @@
                     value={data.user?.name}
                 />
             </div>
-            <Button class="sm:col-span-2 {defaultButtonStyle}" type="submit">
+            <Button class="sm:col-span-2 {primaryButtonStyle}" type="submit">
                 apply
             </Button>
             <Button
@@ -102,7 +102,7 @@
                         yes, i'm sure
                     </Button>
                     <Button
-                        class={defaultButtonStyle}
+                        class={primaryButtonStyle}
                         on:click={() => (popupModal = false)}
                     >
                         no, cancel

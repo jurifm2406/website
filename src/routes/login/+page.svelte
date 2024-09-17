@@ -2,7 +2,7 @@
     import { Register, Section } from "flowbite-svelte-blocks";
     import { Button, Helper, Input, Label } from "flowbite-svelte";
     import { enhance } from "$app/forms";
-    import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
+    import { primaryButtonStyle, defaultInputStyle } from "$lib/styles";
     import type { ActionData } from "./$types";
 
     export let form: ActionData;
@@ -37,7 +37,7 @@
                         type="password"
                     />
                 </Label>
-                <Button class={defaultButtonStyle} type="submit">login</Button>
+                <Button class={primaryButtonStyle} type="submit">login</Button>
                 {#if form?.incorrect}
                     <Helper color="red">invalid username or password</Helper>
                 {/if}

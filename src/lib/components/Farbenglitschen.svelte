@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { defaultButtonStyle } from "$lib/styles";
+    import { primaryButtonStyle } from "$lib/styles";
     import * as d3 from "d3";
     import { Button, Label, Popover, Range } from "flowbite-svelte";
     import { QuestionCircleOutline } from "flowbite-svelte-icons";
@@ -172,10 +172,10 @@
         <p class="float-right">{jokers}</p>
         <Range bind:value={jokers} max="64" min="0" size="sm"></Range>
 
-        <Button class="w-full my-5 {defaultButtonStyle}" on:click={startGame}>
+        <Button class="w-full my-5 {primaryButtonStyle}" on:click={startGame}>
             start game
         </Button>
-        <Button class="w-full {defaultButtonStyle}" on:click={reset}>
+        <Button class="w-full {primaryButtonStyle}" on:click={reset}>
             reset
         </Button>
         <Button

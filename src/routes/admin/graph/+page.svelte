@@ -1,6 +1,6 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
+    import { primaryButtonStyle, defaultInputStyle } from "$lib/styles";
     import type { Person, Relation } from "$lib/types";
     import {
         Button,
@@ -133,7 +133,7 @@
                     <Helper color="red">Specify a person!</Helper>
                 {/if}
 
-                <Button class={defaultButtonStyle} type="submit">
+                <Button class={primaryButtonStyle} type="submit">
                     remove person
                 </Button>
             </form>
@@ -155,7 +155,7 @@
                     />
                 </Label>
 
-                <Button class={defaultButtonStyle} type="submit">
+                <Button class={primaryButtonStyle} type="submit">
                     add person
                 </Button>
                 {#if form?.addPersonIncomplete}
@@ -200,7 +200,7 @@
                     <Helper color="red">Specify both persons!</Helper>
                 {/if}
 
-                <Button class={defaultButtonStyle} type="submit">
+                <Button class={primaryButtonStyle} type="submit">
                     add relation
                 </Button>
             </form>
@@ -241,7 +241,7 @@
                     </Helper>
                 {/if}
 
-                <Button class={defaultButtonStyle} type="submit">rename</Button>
+                <Button class={primaryButtonStyle} type="submit">rename</Button>
             </form>
         </div>
         <div class={divClass} style="grid-area: 3 / 1 / 4 / 3;">
@@ -271,7 +271,7 @@
                         />
                     </Label>
                 </div>
-                <Button class={defaultButtonStyle} type="submit">
+                <Button class={primaryButtonStyle} type="submit">
                     remove Relation
                 </Button>
             </form>

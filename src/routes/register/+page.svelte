@@ -1,6 +1,6 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { defaultButtonStyle, defaultInputStyle } from "$lib/styles";
+    import { primaryButtonStyle, defaultInputStyle } from "$lib/styles";
     import { Button, Helper, Input, Label } from "flowbite-svelte";
     import { Register, Section } from "flowbite-svelte-blocks";
     import type { ActionData } from "./$types";
@@ -59,7 +59,7 @@
                 {#if form?.passwordMismatch}
                     <Helper color="red">passwords do not match</Helper>
                 {/if}
-                <Button class="w-full {defaultButtonStyle}" type="submit">
+                <Button class="w-full {primaryButtonStyle}" type="submit">
                     register
                 </Button>
                 {#if form?.userDuplicate}
