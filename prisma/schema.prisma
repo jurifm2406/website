@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String         @id
   sessions      Session[]
-  username      String    @unique
+  username      String         @unique
   name          String?
   password_hash String
-  role          Role      @default(USER)
+  role          Role           @default(USER)
   avatar        Avatar?
+  notifications Notification[]
 }
 
 model Session {
@@ -54,6 +55,28 @@ model Relation {
   person2   Person @relation("PersonRelation2", fields: [person2Id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("relations")
+}
+
+model Notification {
+  id                     Int                  @id @default(autoincrement())
+  template               NotificationTemplate @relation(fields: [notificationTemplateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  origin                 User?                @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId                 String?
+  notificationTemplateId Int
+  createdAt              DateTime             @default(now())
+}
+
+model NotificationTemplate {
+  id           Int              @id @default(autoincrement())
+  name         String
+  type         NotificationType
+  content      String
+  notification Notification[]
+}
+
+enum NotificationType {
+  SOCIAL
+  TECHNICAL
 }
 
 enum Role {
