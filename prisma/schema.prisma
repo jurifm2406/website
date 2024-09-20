@@ -38,11 +38,11 @@ model Person {
 }
 
 model Avatar {
-  id      Int      @id @unique @default(autoincrement())
-  variant String   @default("beam")
-  hex     String[] @default(["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"])
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId  String   @unique
+  id      Int           @id @unique @default(autoincrement())
+  variant AvatarVariant @default(beam)
+  hex     String[]      @default(["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"])
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId  String        @unique
 
   @@map("avatars")
 }
@@ -72,6 +72,11 @@ model NotificationTemplate {
   type         NotificationType
   content      String
   notification Notification[]
+}
+
+enum AvatarVariant {
+  beam
+  bauhaus
 }
 
 enum NotificationType {

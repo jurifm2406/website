@@ -37,7 +37,7 @@ interface DatabaseUserAttributes {
     name?: string;
     role: Role;
     avatar: {
-        variant: string;
+        variant: "beam" | "bauhaus";
         hex: string[];
     };
 }
