@@ -1,6 +1,6 @@
 import { dev } from "$app/environment";
 import { prisma } from "$lib/server/prisma";
-import type { Role } from "$lib/types";
+import type { NotificationType, Role } from "$lib/types";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { Lucia } from "lucia";
 
@@ -20,6 +20,7 @@ export const lucia = new Lucia(adapter, {
             name: attributes.name,
             role: attributes.role,
             avatar: attributes.avatar,
+            notifications: attributes.notifications,
         };
     },
 });
@@ -40,4 +41,15 @@ interface DatabaseUserAttributes {
         variant: "beam" | "bauhaus";
         hex: string[];
     };
+    notifications: {
+        id: number;
+        template: {
+            type: NotificationType;
+            content: string;
+        };
+        origin: {
+            username: string;
+        } | null;
+        createdAt: Date;
+    }[];
 }

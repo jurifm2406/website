@@ -40,9 +40,34 @@ const authentication: Handle = async ({ event, resolve }) => {
         },
     });
 
-    if (event.locals.user && avatar) {
-        event.locals.user.avatar = avatar;
+    const notifications = await prisma.notification.findMany({
+        where: {
+            userId: event.locals.user?.id,
+        },
+        select: {
+            id: true,
+            template: {
+                select: {
+                    content: true,
+                    type: true,
+                },
+            },
+            origin: {
+                select: {
+                    username: true,
+                },
+            },
+            createdAt: true,
+        },
+    });
+
+    if (event.locals.user) {
+        if (avatar) {
+            event.locals.user.avatar = avatar;
+        }
+        event.locals.user.notifications = notifications;
     }
+
     event.locals.session = session;
 
     return resolve(event);

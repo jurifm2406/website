@@ -9,12 +9,6 @@ export type Relation = {
     person2: Person;
 };
 
-export const Role: {
-    USER: "USER";
-    ADMIN: "ADMIN";
-} = {
-    USER: "USER",
-    ADMIN: "ADMIN",
-};
+export type NotificationType = "SOCIAL" | "TECHNICAL";
 
-export type Role = (typeof Role)[keyof typeof Role];
+export type Role = "USER" | "ADMIN";
