@@ -29,7 +29,7 @@
     } from "$lib/styles";
     import { applyAction, enhance } from "$app/forms";
     import { ExclamationCircleOutline } from "flowbite-svelte-icons";
-    import { Role } from "$lib/types";
+    import { roles } from "$lib/types";
 
     let searchTerm = "";
 
@@ -38,9 +38,9 @@
 
     let openRow: number;
 
-    const roles: { value: string; name: string }[] = Object.values(Role)
-        .filter((value) => typeof value === "string")
-        .map((value) => ({ value: value as string, name: value as string }));
+    const selectionRoles = roles.map((role) => {
+        return { value: role, name: role };
+    });
 
     let editUserRoleSelected = "";
     let editUserName = "";
@@ -230,7 +230,7 @@
                                                 <Select
                                                     bind:value={editUserRoleSelected}
                                                     class="{defaultInputStyle} mb-4"
-                                                    items={roles}
+                                                    items={selectionRoles}
                                                     name="role"
                                                 />
                                                 <Button

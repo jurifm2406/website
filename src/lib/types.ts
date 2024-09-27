@@ -11,4 +11,6 @@ export type Relation = {
 
 export type NotificationType = "social" | "technical" | "warning";
 
-export type Role = "user" | "admin";
+export const roles = ["user", "admin"] as const;
+
+export type Role = (typeof roles)[number];
