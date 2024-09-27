@@ -47,15 +47,13 @@ const authentication: Handle = async ({ event, resolve }) => {
             },
             select: {
                 notification: {
-                    include: {
+                    select: {
                         origin: {
                             select: {
                                 id: true,
                                 username: true,
                             },
                         },
-                    },
-                    select: {
                         id: true,
                         template: {
                             select: {
