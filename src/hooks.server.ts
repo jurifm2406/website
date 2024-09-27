@@ -40,26 +40,35 @@ const authentication: Handle = async ({ event, resolve }) => {
         },
     });
 
-    const notifications = await prisma.notification.findMany({
-        where: {
-            userId: event.locals.user?.id,
-        },
-        select: {
-            id: true,
-            template: {
-                select: {
-                    content: true,
-                    type: true,
+    const notifications = (
+        await prisma.notificationsToUsers.findMany({
+            where: {
+                userId: event.locals.user?.id,
+            },
+            select: {
+                notification: {
+                    include: {
+                        origin: {
+                            select: {
+                                id: true,
+                                username: true,
+                            },
+                        },
+                    },
+                    select: {
+                        id: true,
+                        template: {
+                            select: {
+                                type: true,
+                                content: true,
+                            },
+                        },
+                        createdAt: true,
+                    },
                 },
             },
-            origin: {
-                select: {
-                    username: true,
-                },
-            },
-            createdAt: true,
-        },
-    });
+        })
+    ).map((notification) => notification.notification);
 
     if (event.locals.user) {
         if (avatar) {

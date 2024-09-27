@@ -48,8 +48,9 @@ interface DatabaseUserAttributes {
             content: string;
         };
         origin: {
+            id: string;
             username: string;
-        } | null;
+        };
         createdAt: Date;
     }[];
 }
