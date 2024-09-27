@@ -9,6 +9,6 @@ export type Relation = {
     person2: Person;
 };
 
-export type NotificationType = "SOCIAL" | "TECHNICAL";
+export type NotificationType = "social" | "technical" | "warning";
 
-export type Role = "USER" | "ADMIN";
+export type Role = "user" | "admin";

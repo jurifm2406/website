@@ -16,7 +16,7 @@ model User {
   username      String                 @unique
   name          String?
   password_hash String
-  role          Role           @default(USER)
+  role          Role                   @default(user)
   avatar        Avatar?
   outbox        Notification[]
   inbox         NotificationsToUsers[]
@@ -91,11 +91,12 @@ enum AvatarVariant {
 }
 
 enum NotificationType {
-  SOCIAL
-  TECHNICAL
+  social
+  technical
+  warning
 }
 
 enum Role {
-  USER
-  ADMIN
+  user
+  admin
 }

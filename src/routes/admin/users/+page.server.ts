@@ -28,7 +28,7 @@ export const actions: Actions = {
         if (
             typeof id === "string" &&
             typeof name === "string" &&
-            (role === "USER" || role === "ADMIN")
+            (role === "user" || role === "admin")
         ) {
             await prisma.user.update({
                 where: {
