@@ -41,19 +41,13 @@ const authentication: Handle = async ({ event, resolve }) => {
     });
 
     const notifications = (
-        await prisma.notificationsToUsers.findMany({
+        await prisma.user.findFirst({
             where: {
-                userId: event.locals.user?.id,
+                id: user?.id,
             },
             select: {
-                notification: {
+                notifications_in: {
                     select: {
-                        origin: {
-                            select: {
-                                id: true,
-                                username: true,
-                            },
-                        },
                         id: true,
                         template: {
                             select: {
@@ -61,18 +55,26 @@ const authentication: Handle = async ({ event, resolve }) => {
                                 content: true,
                             },
                         },
+                        origin: {
+                            select: {
+                                id: true,
+                                username: true,
+                            },
+                        },
                         createdAt: true,
                     },
                 },
             },
         })
-    ).map((notification) => notification.notification);
+    )?.notifications_in;
 
     if (event.locals.user) {
         if (avatar) {
             event.locals.user.avatar = avatar;
         }
-        event.locals.user.notifications = notifications;
+        if (notifications) {
+            event.locals.user.notifications = notifications;
+        }
     }
 
     event.locals.session = session;
