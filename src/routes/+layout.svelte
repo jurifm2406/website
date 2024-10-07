@@ -13,11 +13,13 @@
         NavLi,
         NavUl,
         Navbar,
+        P,
     } from "flowbite-svelte";
     import Avatar from "svelte-boring-avatars";
     import type { LayoutData } from "./$types";
     import { dark } from "$lib/stores";
     import { onMount } from "svelte";
+    import { BellSolid } from "flowbite-svelte-icons";
 
     async function logout() {
         const response = await fetch("/logout", {
@@ -36,13 +38,17 @@
         }
     }
 
-    let dropdownOpen = false;
-
     export let data: LayoutData;
 
     onMount(() => {
         dark.set(localStorage.getItem("color-theme") === "dark");
     });
+
+    const notificationColor = {
+        social: "green",
+        technical: "blue",
+        warning: "red",
+    };
 </script>
 
 <div class="relative px-8 h-screen">
@@ -84,6 +90,38 @@
                 <NavLi
                     class="text-black md:hover:text-black hover:text-black dark:text-white"
                 >
+                    <BellSolid size="lg" />
+                    <Dropdown
+                        class="dark:bg-black dark:border dark:border-gray-600 dark:rounded"
+                        placement="bottom"
+                    >
+                        {#if data.user?.notifications.length === 0}
+                            <div class="pb-2 pt-2 pl-5 pr-5">
+                                <P>nothing to see here</P>
+                            </div>
+                        {:else}
+                            {#each data.user?.notifications as notification}
+                                <div
+                                    class="pb-2 pt-2 pl-5 pr-5 border-l-4 border-{notificationColor[
+                                        notification.template.type
+                                    ]}"
+                                >
+                                    <P>
+                                        {notification.template.content.replace(
+                                            "%origin%",
+                                            notification.origin
+                                                ? notification.origin.username
+                                                : "",
+                                        )}
+                                    </P>
+                                </div>
+                            {/each}
+                        {/if}
+                    </Dropdown>
+                </NavLi>
+                <NavLi
+                    class="text-black md:hover:text-black hover:text-black dark:text-white"
+                >
                     <div class="flex items-center md:order-2">
                         <Avatar
                             size={40}
@@ -93,7 +131,6 @@
                         />
                     </div>
                     <Dropdown
-                        bind:open={dropdownOpen}
                         class="dark:bg-black dark:border dark:border-gray-600 dark:rounded"
                         placement="bottom"
                     >
@@ -105,7 +142,7 @@
                             </span>
                         </DropdownItem>
                         <DropdownDivider />
-                        {#if data.user.role === "ADMIN"}
+                        {#if data.user.role === "admin"}
                             <DropdownItem
                                 class="text-black dark:text-white text-center"
                                 href="/admin/graph"
@@ -130,11 +167,10 @@
                 </NavLi>
             {:else}
                 <NavLi>
-                    <div class="flex items-center md:order-2">
+                    <div id="avatar" class="flex items-center md:order-2">
                         <PlaceholderAvatar />
                     </div>
                     <Dropdown
-                        bind:open={dropdownOpen}
                         class="border border-gray-200 dark:border-gray-700 rounded bg-white dark:bg-black"
                         placement="bottom"
                     >
